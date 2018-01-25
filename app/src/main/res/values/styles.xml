@@ -10,16 +10,23 @@
         <item name="android:fontFamily">sans-serif</item>
     </style>
 
-    <style name="Input">
-        <item name="android:layout_marginEnd">16dp</item>
-        <item name="android:layout_marginStart">16dp</item>
-    </style>
-
+    <!-- Style for Button-->
     <style name="ButtonFlat" parent="Widget.AppCompat.Button.Colored">
         <item name="background">@drawable/button_flat</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textSize">16sp</item>
+    </style>
+
+    <!-- Style for login input texts-->
+    <style name="InputCredentials">
+        <item name="android:inputType">textCapWords</item>
+    </style>
+    <style name="InputCredentials.Email">
+        <item name="android:inputType">textEmailAddress</item>
+    </style>
+    <style name="InputCredentials.Password">
+        <item name="android:inputType">textPassword</item>
     </style>
 
 </resources>

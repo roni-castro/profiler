@@ -11,9 +11,41 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
-        release {
+        debug{
+            testCoverageEnabled true
             minifyEnabled false
+            useProguard true
+        }
+        release {
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    productFlavors{
+        flavorDimensions "default"
+        //mock
+        mock {
+            applicationIdSuffix = ".mock"
+            dimension "default"
+        }
+
+        //prod
+        prod {
+            applicationIdSuffix = ".prod"
+            dimension "default"
+        }
+    }
+    // Remove mockRelease build variant as it's not necessary
+    android.variantFilter{ variant ->
+        if(variant.buildType.name.equals("release") && variant.getFlavors().get(0).name.equals("mock")){
+            variant.setIgnore(true)
+        }
+    }
+    // Always show the result of every unit test, even if it passes
+    testOptions.unitTests.all{
+        testLogging {
+            events 'passed', 'skipped', 'standardOut', 'standardError'
         }
     }
 }

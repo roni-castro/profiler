@@ -1,8 +1,7 @@
 package com.example.roni.profiler.profilePage;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,25 +9,8 @@ import android.view.ViewGroup;
 
 import com.example.roni.profiler.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link ProfilePageFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link ProfilePageFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class ProfilePageFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    private OnFragmentInteractionListener mListener;
+public class ProfilePageFragment extends Fragment implements ProfilePageContract.View{
+    private ProfilePageContract.Presenter presenter;
 
     public ProfilePageFragment() {
         // Required empty public constructor
@@ -38,72 +20,104 @@ public class ProfilePageFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment ProfilePageFragment.
      */
-    // TODO: Rename and change types and number of parameters
-    public static ProfilePageFragment newInstance(String param1, String param2) {
+    public static ProfilePageFragment newInstance() {
         ProfilePageFragment fragment = new ProfilePageFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        this.setRetainInstance(true); // Helps the view/Presenter/Service survive orientation change
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile_page, container, false);
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+        View v = inflater.inflate(R.layout.fragment_profile_page, container, false);
+        return v;
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if(presenter == null){
+            presenter = new ProfilePagePresenter();
         }
+
+        presenter.subscribe();
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
+    public void onDestroy() {
+        presenter.unSubscribe();
+        super.onDestroy();
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+    @Override
+    public void showToast(int stringId) {
+
+    }
+
+    @Override
+    public void showToast(String message) {
+
+    }
+
+    @Override
+    public void setPresenter(ProfilePageContract.Presenter presenter) {
+
+    }
+
+    @Override
+    public void setName(String name) {
+
+    }
+
+    @Override
+    public void setEmail(String email) {
+
+    }
+
+    @Override
+    public void setProfilePhotoUrl(String profilePhotoUrl) {
+
+    }
+
+    @Override
+    public void setDefaultProfilePhoto() {
+
+    }
+
+    @Override
+    public void setAboutMeDescription(String description) {
+
+    }
+
+    @Override
+    public void setInterests(String interests) {
+
+    }
+
+    @Override
+    public void showLogoutDialog() {
+
+    }
+
+    @Override
+    public void goToLoginActivity() {
+
+    }
+
+    @Override
+    public void setThumbnailLoadingIndicator(boolean show) {
+
+    }
+
+    @Override
+    public void setDetailLoadingIndicator(boolean show) {
+
     }
 }

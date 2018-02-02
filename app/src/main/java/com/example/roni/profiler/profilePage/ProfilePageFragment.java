@@ -46,7 +46,6 @@ public class ProfilePageFragment extends Fragment implements ProfilePageContract
         if(presenter == null){
             presenter = new ProfilePagePresenter();
         }
-
         presenter.subscribe();
     }
 
@@ -57,17 +56,17 @@ public class ProfilePageFragment extends Fragment implements ProfilePageContract
     }
 
     @Override
+    public void setPresenter(ProfilePageContract.Presenter presenter) {
+        this.presenter = presenter;
+    }
+
+    @Override
     public void showToast(int stringId) {
 
     }
 
     @Override
     public void showToast(String message) {
-
-    }
-
-    @Override
-    public void setPresenter(ProfilePageContract.Presenter presenter) {
 
     }
 

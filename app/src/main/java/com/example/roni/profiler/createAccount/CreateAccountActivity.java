@@ -1,11 +1,11 @@
 package com.example.roni.profiler.createAccount;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.example.roni.profiler.BaseActivity;
 import com.example.roni.profiler.R;
 
-public class CreateAccountActivity extends AppCompatActivity {
+public class CreateAccountActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

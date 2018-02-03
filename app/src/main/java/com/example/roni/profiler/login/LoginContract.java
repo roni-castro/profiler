@@ -5,4 +5,6 @@ package com.example.roni.profiler.login;
  */
 
 public interface LoginContract {
+
+
 }

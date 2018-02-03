@@ -32,7 +32,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="52dp"
-        app:layout_constraintBottom_toTopOf="@+id/signInBtn"
+        app:layout_constraintBottom_toTopOf="@+id/btn_login"
         app:layout_constraintEnd_toEndOf="@+id/textInputLayoutEmail"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/textInputLayoutEmail">
@@ -46,27 +46,27 @@
     </android.support.design.widget.TextInputLayout>
 
     <Button
-        android:id="@+id/signInBtn"
+        android:id="@+id/btn_login"
         style="@style/ButtonFlat"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:text="@string/login"
-        app:layout_constraintBottom_toTopOf="@+id/registerBtn"
+        app:layout_constraintBottom_toTopOf="@+id/btn_register"
         app:layout_constraintEnd_toEndOf="@+id/textInputLayoutPassword"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/textInputLayoutPassword" />
 
     <Button
-        android:id="@+id/registerBtn"
+        android:id="@+id/btn_register"
         style="@style/ButtonFlat"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="176dp"
         android:text="@string/sign_up"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/signInBtn"
+        app:layout_constraintEnd_toEndOf="@+id/btn_login"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/signInBtn" />
+        app:layout_constraintStart_toStartOf="@+id/btn_login" />
 
 </android.support.constraint.ConstraintLayout>

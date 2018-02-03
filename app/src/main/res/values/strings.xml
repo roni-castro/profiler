@@ -9,4 +9,8 @@
     <string name="welcome_msg">Welcome to Profiler</string>
     <string name="about_me">About Me</string>
     <string name="interests">Interests</string>
+    <string name="YES">YES</string>
+    <string name="NO">NO</string>
+    <string name="error_photo_url_request">Unable to load profile photo</string>
+    <string name="msg_confirmation_logout">Are you sure you want to logout?</string>
 </resources>

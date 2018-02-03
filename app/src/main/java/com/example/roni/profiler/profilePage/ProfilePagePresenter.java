@@ -1,5 +1,9 @@
 package com.example.roni.profiler.profilePage;
 
+import android.content.Intent;
+
+import com.example.roni.profiler.login.LoginActivity;
+
 /**
  * Created by roni on 25/01/18.
  */

@@ -1,7 +1,12 @@
 package com.example.roni.profiler;
 
+import com.example.roni.profiler.dataModel.auth.AuthService;
+import com.example.roni.profiler.dataModel.auth.AuthServiceInjection;
+import com.example.roni.profiler.dataModel.auth.FakeAuthService;
+import com.example.roni.profiler.dataModel.scheduler.SchedulerProviderInjection;
 import com.example.roni.profiler.login.LoginContract;
 import com.example.roni.profiler.login.LoginPresenter;
+import com.example.roni.profiler.utils.SchedulerProvider;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -18,6 +23,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class LoginPresenterTest {
     private LoginPresenter presenter;
+    private AuthService authService;
 
     @Mock
     LoginContract.View loginView;
@@ -25,16 +31,24 @@ public class LoginPresenterTest {
     @Before
     public void setUpTest(){
         MockitoAnnotations.initMocks(this);
-        presenter = new LoginPresenter();
+        authService = AuthServiceInjection.getAuthService();
+
+        presenter = new LoginPresenter(
+                authService,
+                loginView,
+                SchedulerProviderInjection.getSchedulerProvider());
+        authService = AuthServiceInjection.getAuthService();
     }
 
     @Test
     public void whenLoginAttempSucceeds(){
+        presenter.onLoginClick();
         Mockito.verify(loginView).goToProfilePageActivity();
     }
 
     @Test
     public void whenLoginAttempFail(){
+        presenter.onLoginClick();
         Mockito.verify(loginView).showToast(Mockito.anyString());
     }
 

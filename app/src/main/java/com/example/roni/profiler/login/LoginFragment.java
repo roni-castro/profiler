@@ -12,7 +12,11 @@ import android.widget.Toast;
 import com.example.roni.profiler.BaseFragment;
 import com.example.roni.profiler.R;
 import com.example.roni.profiler.createAccount.CreateAccountActivity;
+import com.example.roni.profiler.dataModel.auth.AuthService;
+import com.example.roni.profiler.dataModel.auth.AuthServiceInjection;
+import com.example.roni.profiler.dataModel.scheduler.SchedulerProviderInjection;
 import com.example.roni.profiler.profilePage.ProfilePageActivity;
+import com.example.roni.profiler.utils.SchedulerProvider;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -57,7 +61,7 @@ public class LoginFragment extends BaseFragment implements LoginContract.View {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if(presenter == null){
-            presenter = new LoginPresenter();
+            presenter = new LoginPresenter(AuthServiceInjection.getAuthService(), this, SchedulerProviderInjection.getSchedulerProvider());
         }
         presenter.subscribe();
     }

@@ -8,38 +8,58 @@ import io.reactivex.Maybe;
  */
 
 public class FakeAuthService implements AuthService {
+    private boolean returnFail = false;
+
     @Override
     public Completable createAccount(Credentials credentials) {
-        return null;
+        if(returnFail){
+            Completable.error(new Exception());
+        }
+        return Completable.complete();
     }
 
     @Override
     public Completable loginAccount(Credentials credentials) {
-        return null;
+        if(returnFail){
+            Completable.error(new Exception());
+        }
+        return Completable.complete();
     }
 
     @Override
     public Completable reAuthenticateUserAccount(String credentials) {
-        return null;
+        if(returnFail){
+            Completable.error(new Exception());
+        }
+        return Completable.complete();
     }
 
     @Override
     public Completable logUserOut() {
-        return null;
+        if(returnFail){
+            Completable.error(new Exception());
+        }
+        return Completable.complete();
     }
 
     @Override
     public Completable deleteUserAccount() {
-        return null;
+        if(returnFail){
+            Completable.error(new Exception());
+        }
+        return Completable.complete();
     }
 
     @Override
     public Maybe<User> getUser() {
-        return null;
+        if(returnFail){
+            Maybe.error(new Exception());
+        }
+        return Maybe.just(GenericTestData.getUser());
     }
 
     @Override
-    public void setReturnFail(boolean requestFail) {
-
+    public void setReturnFail(boolean returnFail) {
+        this.returnFail = returnFail;
     }
 }

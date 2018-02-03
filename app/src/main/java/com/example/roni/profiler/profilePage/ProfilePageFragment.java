@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.roni.profiler.BaseFragment;
 import com.example.roni.profiler.R;
@@ -76,6 +77,16 @@ public class ProfilePageFragment extends BaseFragment implements ProfilePageCont
     @Override
     public void setPresenter(ProfilePageContract.Presenter presenter) {
         this.presenter = presenter;
+    }
+
+    @Override
+    public void showToast(int stringResId) {
+        Toast.makeText(getActivity(), stringResId, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void showToast(String message) {
+        Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
     }
 
     @Override

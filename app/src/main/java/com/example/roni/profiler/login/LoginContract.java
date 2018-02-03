@@ -11,7 +11,6 @@ public interface LoginContract {
     interface View extends BaseView<LoginContract.Presenter>{
         String getEmail();
         String getPassword();
-
         void goToCreateAccountActivity();
         void goToProfilePageActivity();
     }

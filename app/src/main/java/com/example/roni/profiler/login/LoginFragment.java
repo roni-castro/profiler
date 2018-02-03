@@ -7,6 +7,7 @@ import android.support.design.widget.TextInputEditText;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.roni.profiler.BaseFragment;
 import com.example.roni.profiler.R;
@@ -74,6 +75,16 @@ public class LoginFragment extends BaseFragment implements LoginContract.View {
     @Override
     public String getPassword() {
         return passwordEditText.getText().toString();
+    }
+
+    @Override
+    public void showToast(int stringResId) {
+        Toast.makeText(getActivity(), stringResId, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void showToast(String message) {
+        Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
     }
 
     @Override

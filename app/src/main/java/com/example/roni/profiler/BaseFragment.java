@@ -8,12 +8,4 @@ import android.widget.Toast;
  */
 
 public abstract class BaseFragment extends Fragment {
-
-    public void showToast(int stringResId) {
-        Toast.makeText(getActivity(), stringResId, Toast.LENGTH_LONG).show();
-    }
-
-    public void showToast(String message) {
-        Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
-    }
 }

@@ -2,14 +2,14 @@ package com.example.roni.profiler.profilePage;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.roni.profiler.BaseFragment;
 import com.example.roni.profiler.R;
 
-public class ProfilePageFragment extends Fragment implements ProfilePageContract.View{
+public class ProfilePageFragment extends BaseFragment implements ProfilePageContract.View{
     private ProfilePageContract.Presenter presenter;
 
     public ProfilePageFragment() {
@@ -58,16 +58,6 @@ public class ProfilePageFragment extends Fragment implements ProfilePageContract
     @Override
     public void setPresenter(ProfilePageContract.Presenter presenter) {
         this.presenter = presenter;
-    }
-
-    @Override
-    public void showToast(int stringId) {
-
-    }
-
-    @Override
-    public void showToast(String message) {
-
     }
 
     @Override

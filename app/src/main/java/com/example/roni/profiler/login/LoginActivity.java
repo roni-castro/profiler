@@ -6,12 +6,23 @@ import com.example.roni.profiler.BaseActivity;
 import com.example.roni.profiler.R;
 
 public class LoginActivity extends BaseActivity {
+    private static final String LOGIN_FRAGMENT = "LOGIN_FRAGMENT";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        LoginFragment loginFragment = (LoginFragment) getSupportFragmentManager().findFragmentByTag(LOGIN_FRAGMENT);
+        if(loginFragment == null){
+            loginFragment = LoginFragment.newInstance();
+        }
+
+        setUpToolbar();
+        setFragment(R.id.fragment_holder, loginFragment, LOGIN_FRAGMENT);
+    }
+
+    private void setUpToolbar(){
         if(getSupportActionBar() != null){
             getSupportActionBar().setTitle(R.string.welcome_msg);
         }

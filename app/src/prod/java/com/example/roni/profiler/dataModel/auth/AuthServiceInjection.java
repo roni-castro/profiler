@@ -1,4 +1,4 @@
-package com.example.roni.profiler.auth;
+package com.example.roni.profiler.dataModel.auth;
 
 /**
  * Created by roni on 01/02/18.

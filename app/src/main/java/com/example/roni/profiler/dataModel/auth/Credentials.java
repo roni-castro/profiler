@@ -9,9 +9,9 @@ public class Credentials {
     private String email;
     private String username;
 
-    public Credentials(String password, String email, String username) {
-        this.password = password;
+    public Credentials(String email, String password, String username) {
         this.email = email;
+        this.password = password;
         this.username = username;
     }
 

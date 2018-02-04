@@ -98,6 +98,11 @@ public class LoginFragment extends BaseFragment implements LoginContract.View {
     }
 
     @Override
+    public void goToForgotPasswordActivity() {
+
+    }
+
+    @Override
     public void goToProfilePageActivity() {
         Intent intent = new Intent(getActivity(), ProfilePageActivity.class);
         startActivity(intent);

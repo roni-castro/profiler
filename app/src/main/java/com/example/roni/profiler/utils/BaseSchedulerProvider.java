@@ -7,7 +7,7 @@ import io.reactivex.Scheduler;
  */
 
 public interface BaseSchedulerProvider {
-    Scheduler getComputationScheduler();
-    Scheduler getIoScheduler();
-    Scheduler getUiScheduler();
+    Scheduler computation();
+    Scheduler io();
+    Scheduler ui();
 }

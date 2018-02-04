@@ -8,6 +8,8 @@ import io.reactivex.Maybe;
  */
 
 public class FakeAuthService implements AuthService {
+    private static final String VALID_EMAIL = "email@example.com";
+    private static final String VALID_PASSWORD = "1234567";
     private boolean returnFail = false;
 
     @Override
@@ -55,11 +57,6 @@ public class FakeAuthService implements AuthService {
         if(returnFail){
             Maybe.error(new Exception());
         }
-        return Maybe.just(GenericTestData.getUser());
-    }
-
-    @Override
-    public void setReturnFail(boolean returnFail) {
-        this.returnFail = returnFail;
+        return Maybe.just(new User(VALID_EMAIL, VALID_PASSWORD));
     }
 }

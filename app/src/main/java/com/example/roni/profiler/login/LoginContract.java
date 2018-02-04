@@ -12,6 +12,7 @@ public interface LoginContract {
         String getEmail();
         String getPassword();
         void goToCreateAccountActivity();
+        void goToForgotPasswordActivity();
         void goToProfilePageActivity();
     }
 

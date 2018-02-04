@@ -36,11 +36,11 @@ public class FirebaseAuthService implements AuthService {
 
     @Override
     public Maybe<User> getUser() {
-        return null;
+
     }
 
     @Override
-    public void setReturnFail(boolean requestFail) {
+        public void setReturnFail(boolean requestFail) {
 
     }
 }

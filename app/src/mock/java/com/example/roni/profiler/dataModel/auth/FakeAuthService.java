@@ -59,4 +59,9 @@ public class FakeAuthService implements AuthService {
         }
         return Maybe.just(new User(VALID_EMAIL, VALID_PASSWORD));
     }
+
+    @Override
+    public void setReturnFail(boolean returnFail) {
+        this.returnFail = returnFail;
+    }
 }

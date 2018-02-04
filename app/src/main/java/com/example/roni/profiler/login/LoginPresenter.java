@@ -105,7 +105,6 @@ public class LoginPresenter implements LoginContract.Presenter {
         } else if(password.isEmpty()){
             view.showToast("Password field cannot be empty");
         } else{
-            //attemptLogin(email, password);
             attemptLogIn(new Credentials(email, password, ""));
         }
     }

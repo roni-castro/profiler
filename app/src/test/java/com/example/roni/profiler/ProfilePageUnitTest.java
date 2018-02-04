@@ -109,7 +109,6 @@ public class ProfilePageUnitTest {
         Mockito.when(view.getPassword()).thenReturn(VALID_PASSWORD);
         Mockito.when(view.getConfirmationPassword()).thenReturn(VALID_PASSWORD);
         presenter.onCreateAccount();
-        Mockito.verify(view).onAccountCreatedSuccessfully();
         Mockito.verify(view).goToProfilePageActivity();
     }
 

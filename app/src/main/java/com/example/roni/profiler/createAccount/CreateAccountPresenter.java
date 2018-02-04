@@ -5,4 +5,23 @@ package com.example.roni.profiler.createAccount;
  */
 
 public class CreateAccountPresenter implements CreateAccountContract.Presenter {
+    @Override
+    public void subscribe() {
+
+    }
+
+    @Override
+    public void unSubscribe() {
+
+    }
+
+    @Override
+    public void onCreateAccount() {
+
+    }
+
+    @Override
+    public void onAccountCreatedSuccessfully() {
+
+    }
 }

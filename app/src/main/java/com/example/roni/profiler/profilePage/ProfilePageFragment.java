@@ -81,12 +81,12 @@ public class ProfilePageFragment extends BaseFragment implements ProfilePageCont
 
     @Override
     public void showToast(int stringResId) {
-        Toast.makeText(getActivity(), stringResId, Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity().getApplicationContext(), stringResId, Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void showToast(String message) {
-        Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity().getApplicationContext(), message, Toast.LENGTH_LONG).show();
     }
 
     @Override

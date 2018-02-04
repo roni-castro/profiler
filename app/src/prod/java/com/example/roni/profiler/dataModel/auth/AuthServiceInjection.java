@@ -7,6 +7,6 @@ package com.example.roni.profiler.dataModel.auth;
 public class AuthServiceInjection {
 
     public static AuthService getAuthService(){
-        return new FirebaseAuthService();
+        return FirebaseAuthService.getInstance();
     }
 }

@@ -83,12 +83,12 @@ public class LoginFragment extends BaseFragment implements LoginContract.View {
 
     @Override
     public void showToast(int stringResId) {
-        Toast.makeText(getActivity(), stringResId, Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity().getApplication(), stringResId, Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void showToast(String message) {
-        Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity().getApplication(), message, Toast.LENGTH_LONG).show();
     }
 
     @Override

@@ -61,9 +61,18 @@ public class LoginFragment extends BaseFragment implements LoginContract.View {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if(presenter == null){
-            presenter = new LoginPresenter(AuthServiceInjection.getAuthService(), this, SchedulerProviderInjection.getSchedulerProvider());
+            AuthService authService = AuthServiceInjection.getAuthService();
+            SchedulerProvider schedulerProvider = SchedulerProviderInjection.getSchedulerProvider();
+            presenter = new LoginPresenter(authService, this, schedulerProvider);
+            presenter.subscribe();
         }
-        presenter.subscribe();
+
+    }
+
+    @Override
+    public void onDestroy(){
+        presenter.unSubscribe();
+        super.onDestroy();
     }
 
     @Override

@@ -23,7 +23,7 @@ import io.reactivex.MaybeOnSubscribe;
 public class FirebaseAuthService implements AuthService {
     private static FirebaseAuthService instance;
     private FirebaseAuth auth;
-    //private FirebaseAuth.AuthStateListener listener;
+    private FirebaseAuth.AuthStateListener listener;
 
     private FirebaseAuthService() {
         auth = FirebaseAuth.getInstance();
@@ -37,8 +37,28 @@ public class FirebaseAuthService implements AuthService {
     }
 
     @Override
-    public Completable createAccount(Credentials credentials) {
-        return null;
+    public Completable createAccount(final Credentials credentials) {
+        return Completable.create(
+                new CompletableOnSubscribe() {
+                    @Override
+                    public void subscribe(final CompletableEmitter emitter) throws Exception {
+                        auth.createUserWithEmailAndPassword(credentials.getEmail(), credentials.getPassword())
+                                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        if (task.isSuccessful()) {
+                                            // Created user successfully and logged him in
+                                            //FirebaseUser user = auth.getCurrentUser();
+                                            emitter.onComplete();
+                                        } else {
+                                            // If creation of user faileds
+                                            emitter.onError(task.getException());
+                                        }
+                                    }
+                                });
+                    }
+                }
+        );
     }
 
     @Override
@@ -73,7 +93,27 @@ public class FirebaseAuthService implements AuthService {
 
     @Override
     public Completable logUserOut() {
-        return null;
+        return Completable.create(
+                new CompletableOnSubscribe() {
+                    @Override
+                    public void subscribe(final CompletableEmitter emitter) throws Exception {
+                        listener = new FirebaseAuth.AuthStateListener() {
+                            @Override
+                            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+
+                                if (firebaseAuth.getCurrentUser() == null) {
+                                    emitter.onComplete();
+                                } else {
+                                    emitter.onError(new Exception());
+                                }
+                                auth.removeAuthStateListener(listener);
+                            }
+                        };
+                        auth.addAuthStateListener(listener);
+                        auth.signOut();
+                    }
+                }
+        );
     }
 
     @Override
@@ -87,14 +127,9 @@ public class FirebaseAuthService implements AuthService {
                 new MaybeOnSubscribe<User>() {
                     @Override
                     public void subscribe(final MaybeEmitter<User> e) throws Exception {
-//                        if (auth == null) {
-//                            auth = FirebaseAuth.getInstance();
-//                        }
-
-//                        if (listener != null) {
-//                            auth.removeAuthStateListener(listener);
-//                        }
-                        final FirebaseAuth.AuthStateListener listener;
+                        if (listener != null) {
+                            auth.removeAuthStateListener(listener);
+                        }
                         listener = new FirebaseAuth.AuthStateListener() {
                             @Override
                             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -118,6 +153,14 @@ public class FirebaseAuthService implements AuthService {
                 }
         );
         return maybe;
+    }
+
+    @Override
+    public void removeAuthListener() {
+        if(listener != null) {
+            auth.removeAuthStateListener(listener);
+            listener = null;
+        }
     }
 
     @Override

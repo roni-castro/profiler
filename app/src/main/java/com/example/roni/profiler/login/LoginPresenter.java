@@ -5,7 +5,6 @@ import com.example.roni.profiler.dataModel.auth.Credentials;
 import com.example.roni.profiler.dataModel.auth.User;
 import com.example.roni.profiler.utils.BaseSchedulerProvider;
 
-import io.reactivex.Scheduler;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.observers.DisposableMaybeObserver;
@@ -30,7 +29,7 @@ public class LoginPresenter implements LoginContract.Presenter {
 
     /**
      * When this Activity first starts, check if there is a currently logged in user.
-     * If so, send the user to their Profile Page.
+     * If so, send the user to their Profile Page. When the user signs out
      */
     private void getUser(){
         compositeDisposable.add(
@@ -53,11 +52,11 @@ public class LoginPresenter implements LoginContract.Presenter {
                     }
 
                     /**
-                     * We didn't find a user in the Auth Database. That's not an error
+                     * We didn't find a user in the Auth Database or it was logged out. That's not an error
                      */
                     @Override
                     public void onComplete() {
-                       view.showToast("User not found");
+                       //view.showToast("User not found");
                     }
                 })
         );
@@ -91,6 +90,7 @@ public class LoginPresenter implements LoginContract.Presenter {
     @Override
     public void unSubscribe() {
         compositeDisposable.clear();
+        authService.removeAuthListener();
     }
 
     @Override

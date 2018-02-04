@@ -14,6 +14,8 @@ import android.widget.Toast;
 import com.example.roni.profiler.BaseFragment;
 import com.example.roni.profiler.R;
 import com.example.roni.profiler.components.DialogUtils;
+import com.example.roni.profiler.dataModel.auth.AuthServiceInjection;
+import com.example.roni.profiler.dataModel.scheduler.SchedulerProviderInjection;
 import com.example.roni.profiler.login.LoginActivity;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -63,7 +65,10 @@ public class ProfilePageFragment extends BaseFragment implements ProfilePageCont
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if(presenter == null){
-            presenter = new ProfilePagePresenter();
+            presenter = new ProfilePagePresenter(
+                    AuthServiceInjection.getAuthService(),
+                    this,
+                    SchedulerProviderInjection.getSchedulerProvider());
         }
         presenter.subscribe();
     }

@@ -102,8 +102,8 @@ public class CreateAccountFragment extends BaseFragment implements CreateAccount
     @Override
     public void goToProfilePageActivity() {
         Intent intent = new Intent(getActivity(), ProfilePageActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
-        getActivity().finish();
     }
 
     @OnClick(R.id.btn_create_account)

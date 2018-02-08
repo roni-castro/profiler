@@ -16,15 +16,15 @@ import io.reactivex.observers.DisposableMaybeObserver;
 public class LoginPresenter implements LoginContract.Presenter {
     private CompositeDisposable compositeDisposable;
     private AuthService authService;
-    private LoginContract.View view;
+    private LoginContract.AppView appView;
     private BaseSchedulerProvider schedulerProvider;
 
-    public LoginPresenter(AuthService authService, LoginContract.View view, BaseSchedulerProvider baseSchedulerProvider){
+    public LoginPresenter(AuthService authService, LoginContract.AppView appView, BaseSchedulerProvider baseSchedulerProvider){
         this.authService = authService;
         this.schedulerProvider = baseSchedulerProvider;
         this.compositeDisposable = new CompositeDisposable();
-        this.view = view;
-        view.setPresenter(this);
+        this.appView = appView;
+        appView.setPresenter(this);
     }
 
     /**
@@ -43,12 +43,12 @@ public class LoginPresenter implements LoginContract.Presenter {
                      */
                     @Override
                     public void onSuccess(User user) {
-                        view.goToProfilePageActivity();
+                        appView.goToProfilePageActivity();
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        view.showToast(e.getMessage());
+                        appView.showMessage(e.getMessage());
                     }
 
                     /**
@@ -56,7 +56,7 @@ public class LoginPresenter implements LoginContract.Presenter {
                      */
                     @Override
                     public void onComplete() {
-                       //view.showToast("User not found");
+                       //appView.showMessage("User not found");
                     }
                 })
         );
@@ -70,12 +70,12 @@ public class LoginPresenter implements LoginContract.Presenter {
                         .subscribeWith(new DisposableCompletableObserver() {
                             @Override
                             public void onComplete() {
-                                view.goToProfilePageActivity();
+                                appView.goToProfilePageActivity();
                             }
 
                             @Override
                             public void onError(Throwable e) {
-                                view.showToast(e.toString());
+                                appView.showMessage(e.toString());
                             }
                         })
         );
@@ -95,15 +95,15 @@ public class LoginPresenter implements LoginContract.Presenter {
 
     @Override
     public void onLoginClick() {
-        String email = view.getEmail();
-        String password = view.getPassword();
+        String email = appView.getEmail();
+        String password = appView.getPassword();
 
         if(email.isEmpty()){
-           view.showToast("Email field cannot be empty");
+           appView.showMessage("Email field cannot be empty");
         } else if (!email.contains("@")) {
-            view.showToast("Email is invalid");
+            appView.showMessage("Email is invalid");
         } else if(password.isEmpty()){
-            view.showToast("Password field cannot be empty");
+            appView.showMessage("Password field cannot be empty");
         } else{
             attemptLogIn(new Credentials(email, password, ""));
         }
@@ -111,16 +111,16 @@ public class LoginPresenter implements LoginContract.Presenter {
 
     @Override
     public void onLoginSuccess() {
-        view.goToProfilePageActivity();
+        appView.goToProfilePageActivity();
     }
 
     @Override
     public void onForgotPasswordClick() {
-        view.goToForgotPasswordActivity();
+        appView.goToForgotPasswordActivity();
     }
 
     @Override
     public void onRegisterClick() {
-        view.goToCreateAccountActivity();
+        appView.goToCreateAccountActivity();
     }
 }

@@ -7,7 +7,7 @@ package com.example.roni.profiler;
 public interface BaseView<T> {
     void setPresenter(T presenter);
 
-    void showToast(int stringId);
+    void showMessage(int stringId);
 
-    void showToast(String message);
+    void showMessage(String message);
 }

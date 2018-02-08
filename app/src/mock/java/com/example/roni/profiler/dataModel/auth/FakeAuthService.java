@@ -61,6 +61,11 @@ public class FakeAuthService implements AuthService {
     }
 
     @Override
+    public void removeAuthListener() {
+
+    }
+
+    @Override
     public void setReturnFail(boolean returnFail) {
         this.returnFail = returnFail;
     }

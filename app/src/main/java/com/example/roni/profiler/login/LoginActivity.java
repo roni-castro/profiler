@@ -9,9 +9,13 @@ public class LoginActivity extends BaseActivity {
     private static final String LOGIN_FRAGMENT = "LOGIN_FRAGMENT";
 
     @Override
+    public int getContentView() {
+        return R.layout.activity_login;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
 
         LoginFragment loginFragment = (LoginFragment) getSupportFragmentManager().findFragmentByTag(LOGIN_FRAGMENT);
         if(loginFragment == null){

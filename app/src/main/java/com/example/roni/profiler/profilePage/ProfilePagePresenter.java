@@ -1,10 +1,6 @@
 package com.example.roni.profiler.profilePage;
 
-import android.content.Intent;
-
 import com.example.roni.profiler.dataModel.auth.AuthService;
-import com.example.roni.profiler.login.LoginActivity;
-import com.example.roni.profiler.login.LoginContract;
 import com.example.roni.profiler.utils.BaseSchedulerProvider;
 
 import io.reactivex.disposables.CompositeDisposable;
@@ -17,17 +13,17 @@ import io.reactivex.observers.DisposableCompletableObserver;
 public class ProfilePagePresenter implements ProfilePageContract.Presenter {
     private CompositeDisposable compositeDisposable;
     private AuthService authService;
-    private ProfilePageContract.View view;
+    private ProfilePageContract.AppView appView;
     private BaseSchedulerProvider schedulerProvider;
 
     public ProfilePagePresenter(AuthService authService,
-                                ProfilePageContract.View view,
+                                ProfilePageContract.AppView appView,
                                 BaseSchedulerProvider baseSchedulerProvider){
         this.authService = authService;
         this.schedulerProvider = baseSchedulerProvider;
         this.compositeDisposable = new CompositeDisposable();
-        this.view = view;
-        view.setPresenter(this);
+        this.appView = appView;
+        appView.setPresenter(this);
 
     }
 
@@ -53,7 +49,7 @@ public class ProfilePagePresenter implements ProfilePageContract.Presenter {
 
     @Override
     public void onLogoutClick() {
-        view.showLogoutDialog();
+        appView.showLogoutDialog();
     }
 
     @Override
@@ -65,12 +61,12 @@ public class ProfilePagePresenter implements ProfilePageContract.Presenter {
                         .subscribeWith(new DisposableCompletableObserver() {
                             @Override
                             public void onComplete() {
-                                view.goToLoginActivity();
+                                appView.goToLoginActivity();
                             }
 
                             @Override
                             public void onError(Throwable e) {
-                                view.showToast(e.getMessage());
+                                appView.showMessage(e.getMessage());
                             }
                         })
         );

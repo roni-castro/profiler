@@ -8,7 +8,7 @@ import com.example.roni.profiler.BaseView;
  */
 
 public interface LoginContract {
-    interface View extends BaseView<LoginContract.Presenter>{
+    interface AppView extends BaseView<LoginContract.Presenter>{
         String getEmail();
         String getPassword();
         void goToCreateAccountActivity();

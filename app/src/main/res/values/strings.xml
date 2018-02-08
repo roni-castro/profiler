@@ -13,4 +13,7 @@
     <string name="NO">NO</string>
     <string name="error_photo_url_request">Unable to load profile photo</string>
     <string name="msg_confirmation_logout">Are you sure you want to logout?</string>
+    <string name="name">Name</string>
+    <string name="create_account">Create Account</string>
+    <string name="confirmation_password">Confirmation password</string>
 </resources>

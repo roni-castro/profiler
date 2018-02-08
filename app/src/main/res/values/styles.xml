@@ -5,7 +5,7 @@
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/accent</item>
-        <item name="colorControlNormal">@android:color/white</item>
+        <item name="colorControlNormal">@android:color/darker_gray</item>
         <item name="colorControlActivated">@color/accent</item>
         <item name="android:fontFamily">sans-serif</item>
     </style>
@@ -24,10 +24,15 @@
         <item name="android:inputType">textCapWords</item>
     </style>
     <style name="InputCredentials.Email">
+        <item name="android:maxLength">120</item>
         <item name="android:inputType">textEmailAddress</item>
     </style>
     <style name="InputCredentials.Password">
+        <item name="android:maxLength">120</item>
         <item name="android:inputType">textPassword</item>
+    </style>
+    <style name="InputCredentials.Name">
+        <item name="android:maxLength">120</item>
     </style>
 
 </resources>

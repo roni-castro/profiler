@@ -10,7 +10,7 @@ import com.example.roni.profiler.BaseView;
 public interface ProfilePageContract {
     // Override the BaseView setPresenter to the Presenter of this contract and add some
     // specific methods to be used on the profile page view
-    interface View extends BaseView<Presenter> {
+    interface AppView extends BaseView<Presenter> {
         void setPresenter(ProfilePageContract.Presenter presenter);
         void setName(String name);
         void setEmail(String email);

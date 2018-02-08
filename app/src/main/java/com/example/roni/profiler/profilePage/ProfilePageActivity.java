@@ -14,9 +14,13 @@ public class ProfilePageActivity extends BaseActivity {
     private static final String PROFILE_PAGE_FRAGMENT = "PROFILE_PAGE_FRAGMENT";
 
     @Override
+    public int getContentView() {
+        return R.layout.activity_profile_page;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile_page);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         ProfilePageFragment fragment = (ProfilePageFragment) fragmentManager.findFragmentByTag(PROFILE_PAGE_FRAGMENT);

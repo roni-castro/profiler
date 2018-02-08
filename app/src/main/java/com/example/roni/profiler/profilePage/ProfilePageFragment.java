@@ -24,7 +24,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ProfilePageFragment extends BaseFragment implements ProfilePageContract.View{
+public class ProfilePageFragment extends BaseFragment implements ProfilePageContract.AppView {
     private ProfilePageContract.Presenter presenter;
     @BindView(R.id.txt_profile_name) TextView userNameTextView;
     @BindView(R.id.txt_profile_email) TextView emailTextView;
@@ -48,17 +48,14 @@ public class ProfilePageFragment extends BaseFragment implements ProfilePageCont
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        this.setRetainInstance(true); // Helps the view/Presenter/Service survive orientation change
+    public int getFragmentViewResId() {
+        return R.layout.fragment_profile_page;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_profile_page, container, false);
-        ButterKnife.bind(this, v);
-        return v;
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        this.setRetainInstance(true); // Helps the view/Presenter/Service survive orientation change
     }
 
     @Override
@@ -85,12 +82,12 @@ public class ProfilePageFragment extends BaseFragment implements ProfilePageCont
     }
 
     @Override
-    public void showToast(int stringResId) {
+    public void showMessage(int stringResId) {
         Toast.makeText(getActivity().getApplicationContext(), stringResId, Toast.LENGTH_LONG).show();
     }
 
     @Override
-    public void showToast(String message) {
+    public void showMessage(String message) {
         Toast.makeText(getActivity().getApplicationContext(), message, Toast.LENGTH_LONG).show();
     }
 
@@ -117,7 +114,7 @@ public class ProfilePageFragment extends BaseFragment implements ProfilePageCont
 
                     @Override
                     public void onError() {
-                        showToast(getString(R.string.error_photo_url_request));
+                        showMessage(getString(R.string.error_photo_url_request));
                     }
                 });
     }

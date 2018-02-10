@@ -89,7 +89,7 @@ public class LoginPresenter<V extends LoginContract.AppView> extends BasePresent
     }
 
     @Override
-    public void onResume() {
+    public void checkIfExistsLoggedUser() {
         getUser();
     }
 

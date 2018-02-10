@@ -5,7 +5,6 @@ package com.example.roni.profiler.ui.base;
  */
 
 public interface BasePresenterContract<V extends BaseView> {
-    void onResume();
 
     void onAttach(V appView);
 
@@ -15,5 +14,4 @@ public interface BasePresenterContract<V extends BaseView> {
     //void handleApiError(ANError error);
 
     void setUserAsLoggedOut();
-
 }

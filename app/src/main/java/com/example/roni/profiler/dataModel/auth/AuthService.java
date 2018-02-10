@@ -1,5 +1,7 @@
 package com.example.roni.profiler.dataModel.auth;
 
+import com.example.roni.profiler.dataModel.database.Profile;
+
 import io.reactivex.Completable;
 import io.reactivex.Maybe;
 
@@ -15,4 +17,6 @@ public interface AuthService {
     Completable deleteUserAccount();
     Maybe<User> getUser();
     void removeAuthListener();
+
+    Completable updateProfileInDB(Profile any);
 }

@@ -24,12 +24,6 @@ public class ProfilePagePresenter<V extends ProfilePageContract.AppView> extends
         super(authService, schedulerProvider, compositeDisposable);
     }
 
-
-    @Override
-    public void onResume() {
-
-    }
-
     @Override
     public void onThumbnailClick() {
         getView().openPhotoGallery();

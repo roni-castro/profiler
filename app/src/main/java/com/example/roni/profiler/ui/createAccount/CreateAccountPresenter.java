@@ -25,9 +25,6 @@ public class CreateAccountPresenter<V extends CreateAccountContract.AppView> ext
     }
 
     @Override
-    public void onResume() {}
-
-    @Override
     public void onCreateAccount() {
         String name = getView().getName();
         String email = getView().getEmail();

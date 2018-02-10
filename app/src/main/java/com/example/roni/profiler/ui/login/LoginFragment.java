@@ -47,8 +47,9 @@ public class LoginFragment extends BaseFragment implements LoginContract.AppView
 
     @Override
     public void onResume() {
-        presenter.onResume();
         super.onResume();
+        presenter.checkIfExistsLoggedUser();
+
     }
 
     @Override

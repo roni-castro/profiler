@@ -3,6 +3,7 @@ package com.example.roni.profiler.dataModel.auth;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.example.roni.profiler.dataModel.database.Profile;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -161,5 +162,10 @@ public class FirebaseAuthService implements AuthService {
             auth.removeAuthStateListener(listener);
             listener = null;
         }
+    }
+
+    @Override
+    public Completable updateProfileInDB(Profile profile) {
+        return null;
     }
 }

@@ -22,6 +22,7 @@ public interface LoginContract {
         void onLoginSuccess();
         void onForgotPasswordClick();
         void onRegisterClick();
+        void checkIfExistsLoggedUser();
     }
 
 }

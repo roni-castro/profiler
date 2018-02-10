@@ -1,12 +1,7 @@
 package com.example.roni.profiler.ui.base;
 
-import android.util.Log;
-
 import com.example.roni.profiler.dataModel.auth.AuthService;
-import com.example.roni.profiler.utils.BaseSchedulerProvider;
-import com.example.roni.profiler.utils.SchedulerProvider;
-
-import javax.inject.Inject;
+import com.example.roni.profiler.utils.BaseSchedulerContract;
 
 import io.reactivex.disposables.CompositeDisposable;
 import timber.log.Timber;
@@ -18,11 +13,11 @@ import timber.log.Timber;
 public abstract class BasePresenter<V extends BaseView> implements BasePresenterContract<V> {
     private final CompositeDisposable compositeDisposable;
     private final AuthService authService;
-    private final SchedulerProvider schedulerProvider;
+    private final BaseSchedulerContract schedulerProvider;
     private V appView;
 
     public BasePresenter(AuthService authService,
-                         SchedulerProvider schedulerProvider,
+                         BaseSchedulerContract schedulerProvider,
                          CompositeDisposable compositeDisposable) {
         this.authService = authService;
         this.schedulerProvider = schedulerProvider;
@@ -56,7 +51,7 @@ public abstract class BasePresenter<V extends BaseView> implements BasePresenter
         return appView;
     }
 
-    public BaseSchedulerProvider getSchedulerProvider() {
+    public BaseSchedulerContract getSchedulerProvider() {
         return schedulerProvider;
     }
 

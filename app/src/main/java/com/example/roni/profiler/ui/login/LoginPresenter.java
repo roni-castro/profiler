@@ -4,6 +4,7 @@ import com.example.roni.profiler.dataModel.auth.AuthService;
 import com.example.roni.profiler.dataModel.auth.Credentials;
 import com.example.roni.profiler.dataModel.auth.User;
 import com.example.roni.profiler.ui.base.BasePresenter;
+import com.example.roni.profiler.utils.BaseSchedulerContract;
 import com.example.roni.profiler.utils.SchedulerProvider;
 
 import javax.inject.Inject;
@@ -21,7 +22,7 @@ public class LoginPresenter<V extends LoginContract.AppView> extends BasePresent
 
     @Inject
     public LoginPresenter(AuthService authService,
-                          SchedulerProvider schedulerProvider,
+                          BaseSchedulerContract schedulerProvider,
                           CompositeDisposable compositeDisposable) {
         super(authService, schedulerProvider, compositeDisposable);
     }
@@ -67,7 +68,7 @@ public class LoginPresenter<V extends LoginContract.AppView> extends BasePresent
     }
 
     public void attemptLogIn(Credentials cred) {
-        getView().showLoading();
+        //getView().showLoading();
         getCompositeDisposable().add(
                 getAuthService().loginAccount(cred)
                         .subscribeOn(getSchedulerProvider().io())

@@ -8,7 +8,7 @@ import io.reactivex.schedulers.Schedulers;
  * Created by roni on 03/02/18.
  */
 
-public class SchedulerProvider implements BaseSchedulerProvider {
+public class SchedulerProvider implements BaseSchedulerContract {
     private static SchedulerProvider instance;
     private SchedulerProvider(){}
 

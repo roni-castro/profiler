@@ -1,23 +1,24 @@
-package com.example.roni.profiler.utils;
+package com.example.roni.profiler;
+
+import com.example.roni.profiler.utils.BaseSchedulerContract;
 
 import io.reactivex.Scheduler;
 import io.reactivex.schedulers.Schedulers;
+import io.reactivex.schedulers.TestScheduler;
 
 /**
  * Used for Unit testing
- * All jobs that subscribe on trampoline() will be queued and executed one by one.
- * Only one thread will be used, not a pool
  * Created by roni on 03/02/18.
  */
 
-public class ImmediateSchedulerProvider implements BaseSchedulerProvider {
-    private static ImmediateSchedulerProvider instance;
+public class TestSchedulerProvider implements BaseSchedulerContract {
+    private static TestSchedulerProvider instance;
 
-    private ImmediateSchedulerProvider(){}
+    private TestSchedulerProvider(){}
 
-    public static synchronized ImmediateSchedulerProvider getInstance(){
+    public static synchronized TestSchedulerProvider getInstance(){
         if(instance == null){
-            instance = new ImmediateSchedulerProvider();
+            instance = new TestSchedulerProvider();
         }
         return instance;
     }

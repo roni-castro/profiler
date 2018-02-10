@@ -2,10 +2,10 @@ package com.example.roni.profiler;
 
 import com.example.roni.profiler.dataModel.auth.AuthService;
 import com.example.roni.profiler.dataModel.auth.Credentials;
-import com.example.roni.profiler.dataModel.scheduler.SchedulerProviderInjection;
 import com.example.roni.profiler.ui.login.LoginContract;
 import com.example.roni.profiler.ui.login.LoginPresenter;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,6 +15,8 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import io.reactivex.Completable;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.TestScheduler;
 
 /**
  * Created by roni on 03/02/18.
@@ -27,10 +29,10 @@ public class LoginPresenterTest {
     private static final String VALID_PASSWORD = "123456";
     private static final String INVALID_PASSWORD = "123"; // user real password is not 123
 
-    private LoginPresenter presenter;
+    private LoginPresenter<LoginContract.AppView> presenter;
 
     @Mock
-    private AuthService authService;
+    AuthService authService;
 
     @Mock
     LoginContract.AppView loginAppView;
@@ -39,10 +41,16 @@ public class LoginPresenterTest {
     public void setUpTest(){
         MockitoAnnotations.initMocks(this);
 
-        presenter = new LoginPresenter(
+        presenter = new LoginPresenter<>(
                 authService,
-                loginAppView,
-                SchedulerProviderInjection.getSchedulerProvider());
+                TestSchedulerProvider.getInstance(),
+                new CompositeDisposable());
+        presenter.onAttach(loginAppView);
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        presenter.onDetach();
     }
 
     @Test

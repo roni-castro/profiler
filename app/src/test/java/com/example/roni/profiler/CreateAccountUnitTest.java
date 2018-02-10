@@ -4,7 +4,7 @@ import com.example.roni.profiler.ui.createAccount.CreateAccountContract;
 import com.example.roni.profiler.ui.createAccount.CreateAccountPresenter;
 import com.example.roni.profiler.dataModel.auth.AuthService;
 import com.example.roni.profiler.dataModel.auth.Credentials;
-import com.example.roni.profiler.dataModel.scheduler.SchedulerProviderInjection;
+import com.example.roni.profiler.utils.SchedulerProvider;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -15,8 +15,7 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import io.reactivex.Completable;
-import io.reactivex.Scheduler;
-import io.reactivex.schedulers.TestScheduler;
+import io.reactivex.disposables.CompositeDisposable;
 
 /**
  * Created by roni on 04/02/18.
@@ -33,12 +32,10 @@ public class CreateAccountUnitTest {
     private static final String INVALID_PASSWORD = "123";
 
 
-    private CreateAccountPresenter presenter;
+    private CreateAccountPresenter<CreateAccountContract.AppView> presenter;
 
     @Mock
-    private AuthService authService;
-
-    Scheduler testScheduler = new TestScheduler();
+    AuthService authService;
 
     @Mock
     private CreateAccountContract.AppView appView;
@@ -47,10 +44,11 @@ public class CreateAccountUnitTest {
     public void setUpTest(){
         MockitoAnnotations.initMocks(this);
 
-        presenter = new CreateAccountPresenter(
+        presenter = new CreateAccountPresenter<>(
                 authService,
-                appView,
-                SchedulerProviderInjection.getSchedulerProvider());
+                TestSchedulerProvider.getInstance(),
+                new CompositeDisposable());
+        presenter.onAttach(appView);
     }
 
     @Test

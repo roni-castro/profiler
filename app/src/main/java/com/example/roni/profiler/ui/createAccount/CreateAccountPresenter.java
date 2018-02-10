@@ -3,7 +3,7 @@ package com.example.roni.profiler.ui.createAccount;
 import com.example.roni.profiler.dataModel.auth.AuthService;
 import com.example.roni.profiler.dataModel.auth.Credentials;
 import com.example.roni.profiler.ui.base.BasePresenter;
-import com.example.roni.profiler.utils.SchedulerProvider;
+import com.example.roni.profiler.utils.BaseSchedulerContract;
 
 import javax.inject.Inject;
 
@@ -19,7 +19,7 @@ public class CreateAccountPresenter<V extends CreateAccountContract.AppView> ext
 
     @Inject
     public CreateAccountPresenter(AuthService authService,
-                                  SchedulerProvider schedulerProvider,
+                                  BaseSchedulerContract schedulerProvider,
                                   CompositeDisposable compositeDisposable) {
         super(authService, schedulerProvider, compositeDisposable);
     }

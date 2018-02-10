@@ -11,9 +11,8 @@ import com.example.roni.profiler.ui.login.LoginContract;
 import com.example.roni.profiler.ui.login.LoginPresenter;
 import com.example.roni.profiler.ui.profilePage.ProfilePageContract;
 import com.example.roni.profiler.ui.profilePage.ProfilePagePresenter;
+import com.example.roni.profiler.utils.BaseSchedulerContract;
 import com.example.roni.profiler.utils.SchedulerProvider;
-
-import java.io.File;
 
 import dagger.Module;
 import dagger.Provides;
@@ -52,7 +51,7 @@ public class ActivityModule {
     }
 
     @Provides
-    SchedulerProvider provideSchedulerProvider() {
+    BaseSchedulerContract provideSchedulerProvider() {
         return SchedulerProvider.getInstance();
     }
 

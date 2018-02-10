@@ -2,8 +2,7 @@ package com.example.roni.profiler.ui.profilePage;
 
 import com.example.roni.profiler.dataModel.auth.AuthService;
 import com.example.roni.profiler.ui.base.BasePresenter;
-import com.example.roni.profiler.utils.BaseSchedulerProvider;
-import com.example.roni.profiler.utils.SchedulerProvider;
+import com.example.roni.profiler.utils.BaseSchedulerContract;
 
 import javax.inject.Inject;
 
@@ -20,7 +19,7 @@ public class ProfilePagePresenter<V extends ProfilePageContract.AppView> extends
 
     @Inject
     public ProfilePagePresenter(AuthService authService,
-                                SchedulerProvider schedulerProvider,
+                                BaseSchedulerContract schedulerProvider,
                                 CompositeDisposable compositeDisposable) {
         super(authService, schedulerProvider, compositeDisposable);
     }

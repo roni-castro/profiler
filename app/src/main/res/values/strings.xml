@@ -16,4 +16,6 @@
     <string name="name">Name</string>
     <string name="create_account">Create Account</string>
     <string name="confirmation_password">Confirmation password</string>
+    <string name="about_me_hint">Tell a bit about yourself</string>
+    <string name="interests_hint">What are your favorites things to do?</string>
 </resources>

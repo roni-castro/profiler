@@ -195,4 +195,9 @@ public class ProfilePageFragment extends BaseFragment implements ProfilePageCont
     public void onLogoutButtonCLick(View view){
         presenter.onLogoutClick();
     }
+
+    @OnClick(R.id.fab)
+    public void onFabClick(View view){
+        presenter.onEditProfileClick();
+    }
 }

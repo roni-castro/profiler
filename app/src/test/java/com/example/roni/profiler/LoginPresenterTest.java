@@ -16,7 +16,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import io.reactivex.Completable;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.schedulers.TestScheduler;
 
 /**
  * Created by roni on 03/02/18.
@@ -60,6 +59,8 @@ public class LoginPresenterTest {
         Mockito.when(authService.loginAccount(Mockito.any(Credentials.class)))
                 .thenReturn(Completable.complete());
         presenter.onLoginClick();
+        Mockito.verify(loginAppView).showLoading();
+        Mockito.verify(loginAppView).hideLoading();
         Mockito.verify(loginAppView).goToProfilePageActivity();
     }
 
@@ -70,6 +71,8 @@ public class LoginPresenterTest {
         Mockito.when(authService.loginAccount(Mockito.any(Credentials.class)))
                 .thenReturn(Completable.error(new Exception()));
         presenter.onLoginClick();
+        Mockito.verify(loginAppView).showLoading();
+        Mockito.verify(loginAppView).hideLoading();
         Mockito.verify(loginAppView).showMessage(Mockito.anyString());
     }
 
@@ -79,6 +82,8 @@ public class LoginPresenterTest {
         Credentials cred = new Credentials(VALID_PASSWORD, "", VALID_EMAIL);
         Mockito.when(authService.loginAccount(cred)).thenReturn(Completable.error(new Exception()));
         presenter.attemptLogIn(cred);
+        Mockito.verify(loginAppView).showLoading();
+        Mockito.verify(loginAppView).hideLoading();
         Mockito.verify(loginAppView).showMessage(Mockito.anyString());
     }
 

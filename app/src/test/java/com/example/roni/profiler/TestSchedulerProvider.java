@@ -4,7 +4,6 @@ import com.example.roni.profiler.utils.BaseSchedulerContract;
 
 import io.reactivex.Scheduler;
 import io.reactivex.schedulers.Schedulers;
-import io.reactivex.schedulers.TestScheduler;
 
 /**
  * Used for Unit testing

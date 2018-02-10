@@ -68,7 +68,7 @@ public class LoginPresenter<V extends LoginContract.AppView> extends BasePresent
     }
 
     public void attemptLogIn(Credentials cred) {
-        //getView().showLoading();
+        getView().showLoading();
         getCompositeDisposable().add(
                 getAuthService().loginAccount(cred)
                         .subscribeOn(getSchedulerProvider().io())

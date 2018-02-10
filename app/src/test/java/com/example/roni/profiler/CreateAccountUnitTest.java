@@ -1,10 +1,9 @@
 package com.example.roni.profiler;
 
-import com.example.roni.profiler.ui.createAccount.CreateAccountContract;
-import com.example.roni.profiler.ui.createAccount.CreateAccountPresenter;
 import com.example.roni.profiler.dataModel.auth.AuthService;
 import com.example.roni.profiler.dataModel.auth.Credentials;
-import com.example.roni.profiler.utils.SchedulerProvider;
+import com.example.roni.profiler.ui.createAccount.CreateAccountContract;
+import com.example.roni.profiler.ui.createAccount.CreateAccountPresenter;
 
 import org.junit.Before;
 import org.junit.Test;

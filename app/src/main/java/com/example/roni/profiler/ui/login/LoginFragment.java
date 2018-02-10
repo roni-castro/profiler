@@ -1,28 +1,27 @@
-package com.example.roni.profiler.login;
+package com.example.roni.profiler.ui.login;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.roni.profiler.BaseFragment;
 import com.example.roni.profiler.R;
-import com.example.roni.profiler.createAccount.CreateAccountActivity;
-import com.example.roni.profiler.dataModel.auth.AuthService;
-import com.example.roni.profiler.dataModel.auth.AuthServiceInjection;
-import com.example.roni.profiler.dataModel.scheduler.SchedulerProviderInjection;
-import com.example.roni.profiler.profilePage.ProfilePageActivity;
-import com.example.roni.profiler.utils.BaseSchedulerProvider;
-import com.example.roni.profiler.utils.SchedulerProvider;
+import com.example.roni.profiler.ui.base.BaseFragment;
+import com.example.roni.profiler.ui.createAccount.CreateAccountActivity;
+import com.example.roni.profiler.ui.profilePage.ProfilePageActivity;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
 public class LoginFragment extends BaseFragment implements LoginContract.AppView {
-    private LoginContract.Presenter presenter;
+
+    @Inject
+    LoginContract.Presenter<LoginContract.AppView> presenter;
+
     @BindView(R.id.edit_txt_email) TextInputEditText emailEditText;
     @BindView(R.id.edit_txt_password) TextInputEditText passwordEditText;
 
@@ -47,39 +46,30 @@ public class LoginFragment extends BaseFragment implements LoginContract.AppView
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        this.setRetainInstance(true); // Helps the view/Presenter/Service survive orientation change
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = super.onCreateView(inflater, container, savedInstanceState);
         return v;
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        if(presenter == null){
-            AuthService authService = AuthServiceInjection.getAuthService();
-            BaseSchedulerProvider schedulerProvider = SchedulerProviderInjection.getSchedulerProvider();
-            presenter = new LoginPresenter(authService, this, schedulerProvider);
-            presenter.subscribe();
-        }
+    protected void setUpCreatedView(View view) {
+
     }
 
     @Override
-    public void onDestroy(){
-        presenter.unSubscribe();
-        super.onDestroy();
+    protected void injectViewIntoComponent() {
+        getActivityComponent().inject(this);
     }
 
     @Override
-    public void setPresenter(LoginContract.Presenter presenter) {
-        this.presenter = presenter;
+    public void attachViewToPresenter() {
+        presenter.onAttach(this);
+    }
+
+    @Override
+    public void detachViewFromPresenter() {
+        presenter.onDetach();
     }
 
     @Override

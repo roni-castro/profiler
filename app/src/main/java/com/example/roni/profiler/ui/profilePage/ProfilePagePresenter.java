@@ -1,31 +1,30 @@
-package com.example.roni.profiler.profilePage;
+package com.example.roni.profiler.ui.profilePage;
 
 import com.example.roni.profiler.dataModel.auth.AuthService;
+import com.example.roni.profiler.ui.base.BasePresenter;
 import com.example.roni.profiler.utils.BaseSchedulerProvider;
+import com.example.roni.profiler.utils.SchedulerProvider;
+
+import javax.inject.Inject;
 
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableCompletableObserver;
+
 
 /**
  * Created by roni on 25/01/18.
  */
 
-public class ProfilePagePresenter implements ProfilePageContract.Presenter {
-    private CompositeDisposable compositeDisposable;
-    private AuthService authService;
-    private ProfilePageContract.AppView appView;
-    private BaseSchedulerProvider schedulerProvider;
+public class ProfilePagePresenter<V extends ProfilePageContract.AppView> extends BasePresenter<V>
+        implements ProfilePageContract.Presenter<V> {
 
+    @Inject
     public ProfilePagePresenter(AuthService authService,
-                                ProfilePageContract.AppView appView,
-                                BaseSchedulerProvider baseSchedulerProvider){
-        this.authService = authService;
-        this.schedulerProvider = baseSchedulerProvider;
-        this.compositeDisposable = new CompositeDisposable();
-        this.appView = appView;
-        appView.setPresenter(this);
-
+                                SchedulerProvider schedulerProvider,
+                                CompositeDisposable compositeDisposable) {
+        super(authService, schedulerProvider, compositeDisposable);
     }
+
 
     @Override
     public void subscribe() {
@@ -34,7 +33,7 @@ public class ProfilePagePresenter implements ProfilePageContract.Presenter {
 
     @Override
     public void unSubscribe() {
-        compositeDisposable.clear();
+
     }
 
     @Override
@@ -49,24 +48,27 @@ public class ProfilePagePresenter implements ProfilePageContract.Presenter {
 
     @Override
     public void onLogoutClick() {
-        appView.showLogoutDialog();
+        getView().showLogoutDialog();
     }
 
     @Override
     public void onLogoutConfirmed() {
-        compositeDisposable.add(
-                authService.logUserOut()
-                        .subscribeOn(schedulerProvider.io())
-                        .observeOn(schedulerProvider.ui())
+        getView().showLogoutDialog();
+        getCompositeDisposable().add(
+                getAuthService().logUserOut()
+                        .subscribeOn(getSchedulerProvider().io())
+                        .observeOn(getSchedulerProvider().ui())
                         .subscribeWith(new DisposableCompletableObserver() {
                             @Override
                             public void onComplete() {
-                                appView.goToLoginActivity();
+                                getView().hideLoading();
+                                getView().goToLoginActivity();
                             }
 
                             @Override
                             public void onError(Throwable e) {
-                                appView.showMessage(e.getMessage());
+                                getView().hideLoading();
+                                getView().showMessage(e.getMessage());
                             }
                         })
         );

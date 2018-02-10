@@ -1,8 +1,8 @@
-package com.example.roni.profiler.createAccount;
+package com.example.roni.profiler.ui.createAccount;
 
 import android.os.Bundle;
 
-import com.example.roni.profiler.BaseActivity;
+import com.example.roni.profiler.ui.base.BaseActivity;
 import com.example.roni.profiler.R;
 
 public class CreateAccountActivity extends BaseActivity {

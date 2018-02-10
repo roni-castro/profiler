@@ -3,8 +3,8 @@ package com.example.roni.profiler;
 import com.example.roni.profiler.dataModel.auth.AuthService;
 import com.example.roni.profiler.dataModel.auth.Credentials;
 import com.example.roni.profiler.dataModel.scheduler.SchedulerProviderInjection;
-import com.example.roni.profiler.login.LoginContract;
-import com.example.roni.profiler.login.LoginPresenter;
+import com.example.roni.profiler.ui.login.LoginContract;
+import com.example.roni.profiler.ui.login.LoginPresenter;
 
 import org.junit.Before;
 import org.junit.Test;

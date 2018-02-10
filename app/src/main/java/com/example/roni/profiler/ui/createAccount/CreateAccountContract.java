@@ -1,7 +1,8 @@
-package com.example.roni.profiler.createAccount;
+package com.example.roni.profiler.ui.createAccount;
 
-import com.example.roni.profiler.BasePresenter;
-import com.example.roni.profiler.BaseView;
+import com.example.roni.profiler.ui.base.BasePresenter;
+import com.example.roni.profiler.ui.base.BasePresenterContract;
+import com.example.roni.profiler.ui.base.BaseView;
 
 /**
  * Created by roni on 25/01/18.
@@ -9,7 +10,7 @@ import com.example.roni.profiler.BaseView;
 
 public interface CreateAccountContract {
 
-    interface AppView extends BaseView<CreateAccountContract.Presenter>{
+    interface AppView extends BaseView{
         String getName();
         String getEmail();
         String getPassword();
@@ -17,7 +18,7 @@ public interface CreateAccountContract {
         void goToProfilePageActivity();
     }
 
-    interface Presenter extends BasePresenter{
+    interface Presenter<V extends AppView> extends BasePresenterContract<V> {
         void onCreateAccount();
         void onAccountCreatedSuccessfully();
     }

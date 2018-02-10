@@ -1,16 +1,15 @@
-package com.example.roni.profiler.components;
+package com.example.roni.profiler.utils;
 
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
-import android.view.View;
 
 import com.example.roni.profiler.R;
 
 /**
  * Created by roni on 02/02/18.
  */
-public class DialogUtils {
+public final class DialogUtils {
     public static void showOkDialog(Context context,
                                     String title,
                                     String message,

@@ -1,8 +1,8 @@
-package com.example.roni.profiler.login;
+package com.example.roni.profiler.ui.login;
 
 import android.os.Bundle;
 
-import com.example.roni.profiler.BaseActivity;
+import com.example.roni.profiler.ui.base.BaseActivity;
 import com.example.roni.profiler.R;
 
 public class LoginActivity extends BaseActivity {

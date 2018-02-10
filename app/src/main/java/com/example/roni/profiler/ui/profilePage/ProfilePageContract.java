@@ -1,7 +1,7 @@
-package com.example.roni.profiler.profilePage;
+package com.example.roni.profiler.ui.profilePage;
 
-import com.example.roni.profiler.BasePresenter;
-import com.example.roni.profiler.BaseView;
+import com.example.roni.profiler.ui.base.BasePresenterContract;
+import com.example.roni.profiler.ui.base.BaseView;
 
 /**
  * Created by roni on 25/01/18.
@@ -10,8 +10,7 @@ import com.example.roni.profiler.BaseView;
 public interface ProfilePageContract {
     // Override the BaseView setPresenter to the Presenter of this contract and add some
     // specific methods to be used on the profile page view
-    interface AppView extends BaseView<Presenter> {
-        void setPresenter(ProfilePageContract.Presenter presenter);
+    interface AppView extends BaseView {
         void setName(String name);
         void setEmail(String email);
         void setProfilePhotoUrl(String profilePhotoUrl);
@@ -25,7 +24,7 @@ public interface ProfilePageContract {
         void setDetailLoadingIndicator(boolean show);
     }
 
-    interface Presenter extends BasePresenter{
+    interface Presenter<V extends ProfilePageContract.AppView> extends BasePresenterContract<V> {
         void onThumbnailClick();
         void onEditProfileClick();
         void onLogoutClick();

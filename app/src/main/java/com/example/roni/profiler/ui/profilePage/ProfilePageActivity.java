@@ -1,9 +1,9 @@
-package com.example.roni.profiler.profilePage;
+package com.example.roni.profiler.ui.profilePage;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 
-import com.example.roni.profiler.BaseActivity;
+import com.example.roni.profiler.ui.base.BaseActivity;
 import com.example.roni.profiler.R;
 
 /**

@@ -1,9 +1,12 @@
-package com.example.roni.profiler.login;
+package com.example.roni.profiler.ui.login;
 
 import com.example.roni.profiler.dataModel.auth.AuthService;
 import com.example.roni.profiler.dataModel.auth.Credentials;
 import com.example.roni.profiler.dataModel.auth.User;
-import com.example.roni.profiler.utils.BaseSchedulerProvider;
+import com.example.roni.profiler.ui.base.BasePresenter;
+import com.example.roni.profiler.utils.SchedulerProvider;
+
+import javax.inject.Inject;
 
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableCompletableObserver;
@@ -13,29 +16,27 @@ import io.reactivex.observers.DisposableMaybeObserver;
  * Created by roni on 25/01/18.
  */
 
-public class LoginPresenter implements LoginContract.Presenter {
-    private CompositeDisposable compositeDisposable;
-    private AuthService authService;
-    private LoginContract.AppView appView;
-    private BaseSchedulerProvider schedulerProvider;
+public class LoginPresenter<V extends LoginContract.AppView> extends BasePresenter<V>
+        implements LoginContract.Presenter<V> {
 
-    public LoginPresenter(AuthService authService, LoginContract.AppView appView, BaseSchedulerProvider baseSchedulerProvider){
-        this.authService = authService;
-        this.schedulerProvider = baseSchedulerProvider;
-        this.compositeDisposable = new CompositeDisposable();
-        this.appView = appView;
-        appView.setPresenter(this);
+    @Inject
+    public LoginPresenter(AuthService authService,
+                          SchedulerProvider schedulerProvider,
+                          CompositeDisposable compositeDisposable) {
+        super(authService, schedulerProvider, compositeDisposable);
     }
+
 
     /**
      * When this Activity first starts, check if there is a currently logged in user.
      * If so, send the user to their Profile Page. When the user signs out
      */
     private void getUser(){
-        compositeDisposable.add(
-                authService.getUser()
-                        .subscribeOn(schedulerProvider.io())
-                        .observeOn(schedulerProvider.ui())
+        getView().showLoading();
+        getCompositeDisposable().add(
+                getAuthService().getUser()
+                        .subscribeOn(getSchedulerProvider().io())
+                        .observeOn(getSchedulerProvider().ui())
                         .subscribeWith(new DisposableMaybeObserver<User>() {
                     /**
                      * User was found
@@ -43,12 +44,14 @@ public class LoginPresenter implements LoginContract.Presenter {
                      */
                     @Override
                     public void onSuccess(User user) {
-                        appView.goToProfilePageActivity();
+                        getView().hideLoading();
+                        getView().goToProfilePageActivity();
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        appView.showMessage(e.getMessage());
+                        getView().hideLoading();
+                        getView().showMessage(e.getMessage());
                     }
 
                     /**
@@ -56,6 +59,7 @@ public class LoginPresenter implements LoginContract.Presenter {
                      */
                     @Override
                     public void onComplete() {
+                        getView().hideLoading();
                        //appView.showMessage("User not found");
                     }
                 })
@@ -63,24 +67,26 @@ public class LoginPresenter implements LoginContract.Presenter {
     }
 
     public void attemptLogIn(Credentials cred) {
-        compositeDisposable.add(
-                authService.loginAccount(cred)
-                        .subscribeOn(schedulerProvider.io())
-                        .observeOn(schedulerProvider.ui())
+        getView().showLoading();
+        getCompositeDisposable().add(
+                getAuthService().loginAccount(cred)
+                        .subscribeOn(getSchedulerProvider().io())
+                        .observeOn(getSchedulerProvider().ui())
                         .subscribeWith(new DisposableCompletableObserver() {
                             @Override
                             public void onComplete() {
-                                appView.goToProfilePageActivity();
+                                getView().hideLoading();
+                                getView().goToProfilePageActivity();
                             }
 
                             @Override
                             public void onError(Throwable e) {
-                                appView.showMessage(e.toString());
+                                getView().hideLoading();
+                                getView().showMessage(e.toString());
                             }
                         })
         );
     }
-
 
     @Override
     public void subscribe() {
@@ -89,21 +95,25 @@ public class LoginPresenter implements LoginContract.Presenter {
 
     @Override
     public void unSubscribe() {
-        compositeDisposable.clear();
-        authService.removeAuthListener();
+
+    }
+
+    @Override
+    public void setUserAsLoggedOut() {
+
     }
 
     @Override
     public void onLoginClick() {
-        String email = appView.getEmail();
-        String password = appView.getPassword();
+        String email = getView().getEmail();
+        String password = getView().getPassword();
 
         if(email.isEmpty()){
-           appView.showMessage("Email field cannot be empty");
+           getView().showMessage("Email field cannot be empty");
         } else if (!email.contains("@")) {
-            appView.showMessage("Email is invalid");
+            getView().showMessage("Email is invalid");
         } else if(password.isEmpty()){
-            appView.showMessage("Password field cannot be empty");
+            getView().showMessage("Password field cannot be empty");
         } else{
             attemptLogIn(new Credentials(email, password, ""));
         }
@@ -111,16 +121,16 @@ public class LoginPresenter implements LoginContract.Presenter {
 
     @Override
     public void onLoginSuccess() {
-        appView.goToProfilePageActivity();
+        getView().goToProfilePageActivity();
     }
 
     @Override
     public void onForgotPasswordClick() {
-        appView.goToForgotPasswordActivity();
+        getView().goToForgotPasswordActivity();
     }
 
     @Override
     public void onRegisterClick() {
-        appView.goToCreateAccountActivity();
+        getView().goToCreateAccountActivity();
     }
 }

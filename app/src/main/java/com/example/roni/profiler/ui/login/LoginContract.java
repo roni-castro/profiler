@@ -1,14 +1,15 @@
-package com.example.roni.profiler.login;
+package com.example.roni.profiler.ui.login;
 
-import com.example.roni.profiler.BasePresenter;
-import com.example.roni.profiler.BaseView;
+import com.example.roni.profiler.ui.base.BasePresenterContract;
+import com.example.roni.profiler.ui.base.BaseView;
 
 /**
  * Created by roni on 25/01/18.
  */
 
 public interface LoginContract {
-    interface AppView extends BaseView<LoginContract.Presenter>{
+
+    interface AppView extends BaseView{
         String getEmail();
         String getPassword();
         void goToCreateAccountActivity();
@@ -16,7 +17,7 @@ public interface LoginContract {
         void goToProfilePageActivity();
     }
 
-    interface Presenter extends BasePresenter{
+    interface Presenter<V extends BaseView> extends BasePresenterContract<V>{
         void onLoginClick();
         void onLoginSuccess();
         void onForgotPasswordClick();

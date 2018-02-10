@@ -1,24 +1,23 @@
-package com.example.roni.profiler.createAccount;
+package com.example.roni.profiler.ui.createAccount;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.view.View;
 
-import com.example.roni.profiler.BaseFragment;
 import com.example.roni.profiler.R;
-import com.example.roni.profiler.dataModel.auth.AuthService;
-import com.example.roni.profiler.dataModel.auth.AuthServiceInjection;
-import com.example.roni.profiler.dataModel.scheduler.SchedulerProviderInjection;
-import com.example.roni.profiler.profilePage.ProfilePageActivity;
-import com.example.roni.profiler.utils.BaseSchedulerProvider;
+import com.example.roni.profiler.ui.base.BaseFragment;
+import com.example.roni.profiler.ui.profilePage.ProfilePageActivity;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
 public class CreateAccountFragment extends BaseFragment implements CreateAccountContract.AppView {
-    CreateAccountContract.Presenter presenter;
+    @Inject
+    CreateAccountContract.Presenter<CreateAccountContract.AppView> presenter;
+
     @BindView(R.id.edit_txt_name)
     TextInputEditText nameEditText;
     @BindView(R.id.edit_txt_email)
@@ -49,24 +48,28 @@ public class CreateAccountFragment extends BaseFragment implements CreateAccount
     }
 
     @Override
+    protected void setUpCreatedView(View view) {
+
+    }
+
+    @Override
+    protected void injectViewIntoComponent() {
+        getActivityComponent().inject(this);
+    }
+
+    @Override
+    public void attachViewToPresenter() {
+        presenter.onAttach(this);
+    }
+
+    @Override
+    public void detachViewFromPresenter() {
+        presenter.onDetach();
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        if(presenter == null){
-            AuthService authService = AuthServiceInjection.getAuthService();
-            BaseSchedulerProvider schedulerProvider = SchedulerProviderInjection.getSchedulerProvider();
-            presenter = new CreateAccountPresenter(authService, this, schedulerProvider);
-            presenter.subscribe();
-        }
-    }
-
-    @Override
-    public void setPresenter(CreateAccountContract.Presenter presenter) {
-        this.presenter = presenter;
     }
 
     @Override

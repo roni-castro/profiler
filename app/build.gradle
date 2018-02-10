@@ -11,7 +11,7 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
-        debug{
+        debug {
             testCoverageEnabled true
             minifyEnabled false
             useProguard true
@@ -22,7 +22,7 @@ android {
         }
     }
 
-    productFlavors{
+    productFlavors {
         flavorDimensions "default"
         //mock
         mock {
@@ -37,13 +37,13 @@ android {
         }
     }
     // Remove mockRelease build variant as it's not necessary
-    android.variantFilter{ variant ->
-        if(variant.buildType.name.equals("release") && variant.getFlavors().get(0).name.equals("mock")){
+    android.variantFilter { variant ->
+        if (variant.buildType.name.equals("release") && variant.getFlavors().get(0).name.equals("mock")) {
             variant.setIgnore(true)
         }
     }
     // Always show the result of every unit test, even if it passes
-    testOptions.unitTests.all{
+    testOptions.unitTests.all {
         testLogging {
             events 'passed', 'skipped', 'standardOut', 'standardError'
         }
@@ -83,5 +83,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 }
+
 
 apply plugin: 'com.google.gms.google-services'

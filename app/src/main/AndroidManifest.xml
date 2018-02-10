@@ -18,6 +18,7 @@
         </activity>
         <activity android:name=".ui.createAccount.CreateAccountActivity" />
         <activity android:name=".ui.profilePage.ProfilePageActivity" />
+        <activity android:name=".ui.profilePage.edit.EditProfileActivity"></activity>
     </application>
 
 </manifest>

@@ -1,7 +1,12 @@
 package com.example.roni.profiler.ui.profilePage;
 
+import android.view.View;
+
+import com.example.roni.profiler.R;
 import com.example.roni.profiler.ui.base.BasePresenterContract;
 import com.example.roni.profiler.ui.base.BaseView;
+
+import butterknife.OnClick;
 
 /**
  * Created by roni on 25/01/18.
@@ -20,8 +25,15 @@ public interface ProfilePageContract {
 
         void showLogoutDialog();
         void goToLoginActivity();
+        void goToEditProfileActivity();
+        void openPhotoGallery();
         void setThumbnailLoadingIndicator(boolean show);
         void setDetailLoadingIndicator(boolean show);
+
+        void onThumbnailClick(View view);
+        void onSettingsButtonClick(View view);
+        void onLogoutButtonClick(View view);
+        void onFabClick(View view);
     }
 
     interface Presenter<V extends ProfilePageContract.AppView> extends BasePresenterContract<V> {

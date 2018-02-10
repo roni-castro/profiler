@@ -32,12 +32,12 @@ public class ProfilePagePresenter<V extends ProfilePageContract.AppView> extends
 
     @Override
     public void onThumbnailClick() {
-
+        getView().openPhotoGallery();
     }
 
     @Override
     public void onEditProfileClick() {
-
+        getView().goToEditProfileActivity();
     }
 
     @Override
@@ -47,7 +47,7 @@ public class ProfilePagePresenter<V extends ProfilePageContract.AppView> extends
 
     @Override
     public void onLogoutConfirmed() {
-        getView().showLogoutDialog();
+        getView().showLoading();
         getCompositeDisposable().add(
                 getAuthService().logUserOut()
                         .subscribeOn(getSchedulerProvider().io())
@@ -62,7 +62,7 @@ public class ProfilePagePresenter<V extends ProfilePageContract.AppView> extends
                             @Override
                             public void onError(Throwable e) {
                                 getView().hideLoading();
-                                getView().showMessage(e.getMessage());
+                                getView().showMessage(e.getLocalizedMessage());
                             }
                         })
         );

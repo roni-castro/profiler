@@ -5,6 +5,7 @@ import com.example.roni.profiler.dataModel.auth.Credentials;
 import com.example.roni.profiler.ui.createAccount.CreateAccountContract;
 import com.example.roni.profiler.ui.createAccount.CreateAccountPresenter;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -48,6 +49,11 @@ public class CreateAccountUnitTest {
                 TestSchedulerProvider.getInstance(),
                 new CompositeDisposable());
         presenter.onAttach(appView);
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        presenter.onDetach();
     }
 
     @Test

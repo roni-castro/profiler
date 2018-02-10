@@ -52,17 +52,17 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:547144417306:android:25a0c2fc3db2be1f",
+        "mobilesdk_app_id": "1:547144417306:android:c54cba48a0a6cc76",
         "android_client_info": {
-          "package_name": "com.example.roni.profiler.prod"
+          "package_name": "com.example.roni.profiler.mock"
         }
       },
       "oauth_client": [
         {
-          "client_id": "547144417306-6uigujdsq9tb9ulpqm5k8cievdekkhpj.apps.googleusercontent.com",
+          "client_id": "547144417306-ao0a3rjlvm1t6eacetvvcltoeituenio.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.roni.profiler.prod",
+            "package_name": "com.example.roni.profiler.mock",
             "certificate_hash": "98ad975264dcc3afab8a530e9acd23efed10a897"
           }
         },
@@ -96,17 +96,17 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:547144417306:android:25a0c2fc3db2be1f",
+        "mobilesdk_app_id": "1:547144417306:android:0a9775ff3a8ec1cf",
         "android_client_info": {
-          "package_name": "com.example.roni.profiler.mock"
+          "package_name": "com.example.roni.profiler.prod"
         }
       },
       "oauth_client": [
         {
-          "client_id": "547144417306-6uigujdsq9tb9ulpqm5k8cievdekkhpj.apps.googleusercontent.com",
+          "client_id": "547144417306-70lq15monv9bba1g71k4gtsjf75omdm0.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.roni.profiler.mock",
+            "package_name": "com.example.roni.profiler.prod",
             "certificate_hash": "98ad975264dcc3afab8a530e9acd23efed10a897"
           }
         },

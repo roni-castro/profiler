@@ -12,6 +12,7 @@ import com.example.roni.profiler.R;
 import com.example.roni.profiler.di.ActivityComponent;
 import com.example.roni.profiler.ui.base.BaseFragment;
 import com.example.roni.profiler.ui.login.LoginActivity;
+import com.example.roni.profiler.ui.profilePage.edit.EditProfileActivity;
 import com.example.roni.profiler.utils.DialogUtils;
 import com.squareup.picasso.Picasso;
 
@@ -177,6 +178,17 @@ public class ProfilePageFragment extends BaseFragment implements ProfilePageCont
     }
 
     @Override
+    public void goToEditProfileActivity() {
+        Intent intent = new Intent(getActivity(), EditProfileActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void openPhotoGallery() {
+        //Logic to be implemented using a lib
+    }
+
+    @Override
     public void setThumbnailLoadingIndicator(boolean show) {
 
     }
@@ -186,17 +198,26 @@ public class ProfilePageFragment extends BaseFragment implements ProfilePageCont
 
     }
 
+    @OnClick(R.id.img_profile_photo)
+    @Override
+    public void onThumbnailClick(View view) {
+        presenter.onThumbnailClick();
+    }
+
     @OnClick(R.id.btn_profile_settings)
+    @Override
     public void onSettingsButtonClick(View view) {
         presenter.onAccountSettingsClick();
     }
 
     @OnClick(R.id.btn_profile_login)
-    public void onLogoutButtonCLick(View view){
+    @Override
+    public void onLogoutButtonClick(View view){
         presenter.onLogoutClick();
     }
 
     @OnClick(R.id.fab)
+    @Override
     public void onFabClick(View view){
         presenter.onEditProfileClick();
     }

@@ -26,12 +26,7 @@ public class ProfilePagePresenter<V extends ProfilePageContract.AppView> extends
 
 
     @Override
-    public void subscribe() {
-
-    }
-
-    @Override
-    public void unSubscribe() {
+    public void onResume() {
 
     }
 

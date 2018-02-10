@@ -32,6 +32,7 @@ public abstract class BasePresenter<V extends BaseView> implements BasePresenter
     @Override
     public void onDetach() {
         compositeDisposable.clear();
+        authService.removeAuthListener();
         appView = null;
     }
 

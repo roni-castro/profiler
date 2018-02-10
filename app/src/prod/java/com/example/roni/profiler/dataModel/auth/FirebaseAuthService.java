@@ -162,9 +162,4 @@ public class FirebaseAuthService implements AuthService {
             listener = null;
         }
     }
-
-    @Override
-        public void setReturnFail(boolean requestFail) {
-
-    }
 }

@@ -46,16 +46,13 @@ public class LoginFragment extends BaseFragment implements LoginContract.AppView
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View v = super.onCreateView(inflater, container, savedInstanceState);
-        return v;
+    public void onResume() {
+        presenter.onResume();
+        super.onResume();
     }
 
     @Override
-    protected void setUpCreatedView(View view) {
-
-    }
+    protected void setUpCreatedView(View view) {}
 
     @Override
     protected void injectViewIntoComponent() {
@@ -99,9 +96,7 @@ public class LoginFragment extends BaseFragment implements LoginContract.AppView
     }
 
     @Override
-    public void goToForgotPasswordActivity() {
-
-    }
+    public void goToForgotPasswordActivity() {}
 
     @Override
     public void goToProfilePageActivity() {

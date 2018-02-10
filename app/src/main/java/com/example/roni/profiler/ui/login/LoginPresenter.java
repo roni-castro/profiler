@@ -5,7 +5,6 @@ import com.example.roni.profiler.dataModel.auth.Credentials;
 import com.example.roni.profiler.dataModel.auth.User;
 import com.example.roni.profiler.ui.base.BasePresenter;
 import com.example.roni.profiler.utils.BaseSchedulerContract;
-import com.example.roni.profiler.utils.SchedulerProvider;
 
 import javax.inject.Inject;
 
@@ -90,13 +89,8 @@ public class LoginPresenter<V extends LoginContract.AppView> extends BasePresent
     }
 
     @Override
-    public void subscribe() {
+    public void onResume() {
         getUser();
-    }
-
-    @Override
-    public void unSubscribe() {
-
     }
 
     @Override

@@ -5,9 +5,7 @@ package com.example.roni.profiler.ui.base;
  */
 
 public interface BasePresenterContract<V extends BaseView> {
-    void subscribe();
-
-    void unSubscribe();
+    void onResume();
 
     void onAttach(V appView);
 

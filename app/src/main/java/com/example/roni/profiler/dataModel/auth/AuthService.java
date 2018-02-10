@@ -15,6 +15,4 @@ public interface AuthService {
     Completable deleteUserAccount();
     Maybe<User> getUser();
     void removeAuthListener();
-
-    void setReturnFail(boolean requestFail);
 }

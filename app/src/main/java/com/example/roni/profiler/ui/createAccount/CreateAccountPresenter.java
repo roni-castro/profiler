@@ -24,6 +24,8 @@ public class CreateAccountPresenter<V extends CreateAccountContract.AppView> ext
         super(authService, schedulerProvider, compositeDisposable);
     }
 
+    @Override
+    public void onResume() {}
 
     @Override
     public void onCreateAccount() {
@@ -57,7 +59,7 @@ public class CreateAccountPresenter<V extends CreateAccountContract.AppView> ext
                         .subscribeWith(new DisposableCompletableObserver() {
                             @Override
                             public void onComplete() {
-                                getView().goToProfilePageActivity();
+                                onAccountCreatedSuccessfully();
                             }
 
                             @Override
@@ -70,16 +72,6 @@ public class CreateAccountPresenter<V extends CreateAccountContract.AppView> ext
 
     @Override
     public void onAccountCreatedSuccessfully() {
-
-    }
-
-    @Override
-    public void subscribe() {
-
-    }
-
-    @Override
-    public void unSubscribe() {
-
+        getView().goToProfilePageActivity();
     }
 }

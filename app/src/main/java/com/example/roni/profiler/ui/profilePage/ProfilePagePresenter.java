@@ -14,6 +14,7 @@ import javax.inject.Inject;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.observers.DisposableMaybeObserver;
+import io.reactivex.observers.DisposableObserver;
 
 
 /**
@@ -39,7 +40,7 @@ public class ProfilePagePresenter<V extends ProfilePageContract.AppView> extends
             getDatabaseSource().getProfile(user.getUserUid())
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
-                .subscribeWith(new DisposableMaybeObserver<Profile>() {
+                .subscribeWith(new DisposableObserver<Profile>() {
                     @Override
                     public void onComplete() {
                         getView().hideLoading();
@@ -47,7 +48,7 @@ public class ProfilePagePresenter<V extends ProfilePageContract.AppView> extends
                     }
 
                     @Override
-                    public void onSuccess(Profile profile) {
+                    public void onNext(Profile profile) {
                         getView().setUpProfileFields(profile);
                     }
 

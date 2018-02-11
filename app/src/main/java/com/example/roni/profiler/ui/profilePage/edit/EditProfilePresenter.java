@@ -10,6 +10,7 @@ import com.example.roni.profiler.utils.BaseSchedulerContract;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.observers.DisposableMaybeObserver;
+import io.reactivex.observers.DisposableObserver;
 
 /**
  * Created by roni on 10/02/18.
@@ -101,10 +102,10 @@ public class EditProfilePresenter<V extends EditProfileContract.AppView> extends
                 getDatabaseSource().getProfile(userUID)
                 .observeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
-                .subscribeWith(new DisposableMaybeObserver<Profile>(){
+                .subscribeWith(new DisposableObserver<Profile>(){
 
                     @Override
-                    public void onSuccess(Profile profile) {
+                    public void onNext(Profile profile) {
                         getView().hideLoading();
                         currentProfile = profile;
                     }

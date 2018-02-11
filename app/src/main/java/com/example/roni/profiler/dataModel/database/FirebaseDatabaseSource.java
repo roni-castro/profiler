@@ -18,9 +18,10 @@ import com.google.firebase.database.ValueEventListener;
 import io.reactivex.Completable;
 import io.reactivex.CompletableEmitter;
 import io.reactivex.CompletableOnSubscribe;
-import io.reactivex.Maybe;
 import io.reactivex.MaybeEmitter;
-import io.reactivex.MaybeOnSubscribe;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
 
 /**
  * Created by roni on 10/02/18.
@@ -116,11 +117,12 @@ public class FirebaseDatabaseSource implements DatabaseSource {
     }
 
     @Override
-    public Maybe<Profile> getProfile(final String uid) {
-        return Maybe.create(
-            new MaybeOnSubscribe<Profile>() {
+    public Observable<Profile> getProfile(final String uid) {
+        return Observable.create(
+            new ObservableOnSubscribe<Profile>() {
+
                 @Override
-                public void subscribe(final MaybeEmitter<Profile> e) throws Exception {
+                public void subscribe(final ObservableEmitter<Profile> emitter) throws Exception {
                     final DatabaseReference dataBaseProfile =
                             FirebaseDatabase.getInstance().getReference(USER_PROFILE).child(uid);
                     dataBaseProfile.addValueEventListener(new ValueEventListener() {
@@ -133,16 +135,16 @@ public class FirebaseDatabaseSource implements DatabaseSource {
                                 for(DataSnapshot dataSnapshot: snapshot.getChildren()){
                                     profile = dataSnapshot.getValue(Profile.class);
                                 }
-                                e.onSuccess(profile);
+                                emitter.onNext(profile);
                             } else {
-                                e.onComplete();
+                                emitter.onComplete();
                             }
                         }
 
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
                             Log.d("FIREBASE", databaseError.toString());
-                            e.onError(databaseError.toException());
+                            //e.onError(databaseError.toException());
                         }
                     });
                 }

@@ -151,6 +151,8 @@ public class ProfilePageFragment extends BaseFragment implements ProfilePageCont
                             setDefaultProfilePhoto();
                         }
                     });
+        } else{
+            setDefaultProfilePhoto();
         }
     }
 

@@ -3,14 +3,15 @@ package com.example.roni.profiler.ui.login;
 import com.example.roni.profiler.dataModel.auth.AuthService;
 import com.example.roni.profiler.dataModel.auth.Credentials;
 import com.example.roni.profiler.dataModel.auth.User;
+import com.example.roni.profiler.dataModel.database.DatabaseSource;
 import com.example.roni.profiler.ui.base.BasePresenter;
 import com.example.roni.profiler.utils.BaseSchedulerContract;
 
 import javax.inject.Inject;
 
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.observers.DisposableMaybeObserver;
+import io.reactivex.observers.DisposableSingleObserver;
 
 /**
  * Created by roni on 25/01/18.
@@ -22,8 +23,9 @@ public class LoginPresenter<V extends LoginContract.AppView> extends BasePresent
     @Inject
     public LoginPresenter(AuthService authService,
                           BaseSchedulerContract schedulerProvider,
-                          CompositeDisposable compositeDisposable) {
-        super(authService, schedulerProvider, compositeDisposable);
+                          CompositeDisposable compositeDisposable,
+                          DatabaseSource databaseSource) {
+        super(authService, schedulerProvider, compositeDisposable, databaseSource);
     }
 
 
@@ -72,9 +74,10 @@ public class LoginPresenter<V extends LoginContract.AppView> extends BasePresent
                 getAuthService().loginAccount(cred)
                         .subscribeOn(getSchedulerProvider().io())
                         .observeOn(getSchedulerProvider().ui())
-                        .subscribeWith(new DisposableCompletableObserver() {
+                        .subscribeWith(new DisposableSingleObserver<User>() {
                             @Override
-                            public void onComplete() {
+                            public void onSuccess(User user) {
+                                getView().saveUserData(user.getUserUid(), user.getEmail(), user.getUsername());
                                 getView().hideLoading();
                                 getView().goToProfilePageActivity();
                             }

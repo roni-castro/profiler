@@ -5,10 +5,12 @@ package com.example.roni.profiler.dataModel.auth;
  */
 
 public class User {
+    private String userUid;
     private String email;
     private String username;
 
-    public User(String email, String username) {
+    public User(String userUid, String email, String username) {
+        this.userUid = userUid;
         this.email = email;
         this.username = username;
     }
@@ -27,5 +29,13 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getUserUid() {
+        return userUid;
+    }
+
+    public void setUserUid(String userUid) {
+        this.userUid = userUid;
     }
 }

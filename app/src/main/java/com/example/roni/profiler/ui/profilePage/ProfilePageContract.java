@@ -3,6 +3,8 @@ package com.example.roni.profiler.ui.profilePage;
 import android.view.View;
 
 import com.example.roni.profiler.R;
+import com.example.roni.profiler.dataModel.auth.User;
+import com.example.roni.profiler.dataModel.database.Profile;
 import com.example.roni.profiler.ui.base.BasePresenterContract;
 import com.example.roni.profiler.ui.base.BaseView;
 
@@ -23,6 +25,8 @@ public interface ProfilePageContract {
         void setAboutMeDescription(String description);
         void setInterests(String interests);
 
+        User loadUserDataFromCache();
+
         void showLogoutDialog();
         void goToLoginActivity();
         void goToEditProfileActivity();
@@ -34,9 +38,12 @@ public interface ProfilePageContract {
         void onSettingsButtonClick(View view);
         void onLogoutButtonClick(View view);
         void onFabClick(View view);
+
+        void setUpProfileFields(Profile profile);
     }
 
     interface Presenter<V extends ProfilePageContract.AppView> extends BasePresenterContract<V> {
+        void loadUserProfileData();
         void onThumbnailClick();
         void onEditProfileClick();
         void onLogoutClick();

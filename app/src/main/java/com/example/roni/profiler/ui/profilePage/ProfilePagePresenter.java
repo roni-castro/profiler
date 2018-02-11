@@ -1,6 +1,11 @@
 package com.example.roni.profiler.ui.profilePage;
 
+import android.content.SharedPreferences;
+
 import com.example.roni.profiler.dataModel.auth.AuthService;
+import com.example.roni.profiler.dataModel.auth.User;
+import com.example.roni.profiler.dataModel.database.DatabaseSource;
+import com.example.roni.profiler.dataModel.database.Profile;
 import com.example.roni.profiler.ui.base.BasePresenter;
 import com.example.roni.profiler.utils.BaseSchedulerContract;
 
@@ -8,6 +13,7 @@ import javax.inject.Inject;
 
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableCompletableObserver;
+import io.reactivex.observers.DisposableMaybeObserver;
 
 
 /**
@@ -20,8 +26,38 @@ public class ProfilePagePresenter<V extends ProfilePageContract.AppView> extends
     @Inject
     public ProfilePagePresenter(AuthService authService,
                                 BaseSchedulerContract schedulerProvider,
-                                CompositeDisposable compositeDisposable) {
-        super(authService, schedulerProvider, compositeDisposable);
+                                CompositeDisposable compositeDisposable,
+                                DatabaseSource databaseSource) {
+        super(authService, schedulerProvider, compositeDisposable, databaseSource);
+    }
+
+    @Override
+    public void loadUserProfileData() {
+        User user = getView().loadUserDataFromCache();
+        getView().showLoading();
+        getCompositeDisposable().add(
+            getDatabaseSource().getProfile(user.getUserUid())
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribeWith(new DisposableMaybeObserver<Profile>() {
+                    @Override
+                    public void onComplete() {
+                        getView().hideLoading();
+                        getView().goToLoginActivity();
+                    }
+
+                    @Override
+                    public void onSuccess(Profile profile) {
+                        getView().setUpProfileFields(profile);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        getView().hideLoading();
+                        getView().showMessage(e.getLocalizedMessage());
+                    }
+                })
+        );
     }
 
     @Override

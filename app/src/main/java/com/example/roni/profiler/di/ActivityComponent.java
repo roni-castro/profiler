@@ -3,6 +3,7 @@ package com.example.roni.profiler.di;
 import com.example.roni.profiler.ui.createAccount.CreateAccountFragment;
 import com.example.roni.profiler.ui.login.LoginFragment;
 import com.example.roni.profiler.ui.profilePage.ProfilePageFragment;
+import com.example.roni.profiler.ui.profilePage.edit.EditProfileActivity;
 
 import dagger.Component;
 
@@ -16,4 +17,5 @@ public interface ActivityComponent {
     void inject(LoginFragment fragment);
     void inject(CreateAccountFragment fragment);
     void inject(ProfilePageFragment fragment);
+    void inject(EditProfileActivity activity);
 }

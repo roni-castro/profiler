@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.example.roni.profiler.dataModel.auth.AuthService;
 import com.example.roni.profiler.dataModel.auth.AuthServiceInjection;
+import com.example.roni.profiler.dataModel.database.DatabaseSource;
+import com.example.roni.profiler.dataModel.database.DatabaseSourceInjection;
 import com.example.roni.profiler.ui.base.BaseActivity;
 import com.example.roni.profiler.ui.createAccount.CreateAccountContract;
 import com.example.roni.profiler.ui.createAccount.CreateAccountPresenter;
@@ -11,6 +13,8 @@ import com.example.roni.profiler.ui.login.LoginContract;
 import com.example.roni.profiler.ui.login.LoginPresenter;
 import com.example.roni.profiler.ui.profilePage.ProfilePageContract;
 import com.example.roni.profiler.ui.profilePage.ProfilePagePresenter;
+import com.example.roni.profiler.ui.profilePage.edit.EditProfileContract;
+import com.example.roni.profiler.ui.profilePage.edit.EditProfilePresenter;
 import com.example.roni.profiler.utils.BaseSchedulerContract;
 import com.example.roni.profiler.utils.SchedulerProvider;
 
@@ -51,6 +55,11 @@ public class ActivityModule {
     }
 
     @Provides
+    DatabaseSource provideDatabaseSourceService() {
+        return DatabaseSourceInjection.getDatabaseSource();
+    }
+
+    @Provides
     BaseSchedulerContract provideSchedulerProvider() {
         return SchedulerProvider.getInstance();
     }
@@ -70,6 +79,12 @@ public class ActivityModule {
     @Provides
     ProfilePageContract.Presenter<ProfilePageContract.AppView> provideProfilePagePresenter(
             ProfilePagePresenter<ProfilePageContract.AppView> presenter) {
+        return presenter;
+    }
+
+    @Provides
+    EditProfileContract.Presenter<EditProfileContract.AppView> provideEditProfilePresenter(
+            EditProfilePresenter<EditProfileContract.AppView> presenter) {
         return presenter;
     }
 }

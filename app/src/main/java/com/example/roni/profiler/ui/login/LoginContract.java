@@ -15,6 +15,7 @@ public interface LoginContract {
         void goToCreateAccountActivity();
         void goToForgotPasswordActivity();
         void goToProfilePageActivity();
+        void saveUserData(String uid, String email, String name);
     }
 
     interface Presenter<V extends BaseView> extends BasePresenterContract<V>{

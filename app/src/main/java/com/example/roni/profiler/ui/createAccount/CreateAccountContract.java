@@ -1,5 +1,6 @@
 package com.example.roni.profiler.ui.createAccount;
 
+import com.example.roni.profiler.dataModel.auth.User;
 import com.example.roni.profiler.ui.base.BasePresenter;
 import com.example.roni.profiler.ui.base.BasePresenterContract;
 import com.example.roni.profiler.ui.base.BaseView;
@@ -16,10 +17,11 @@ public interface CreateAccountContract {
         String getPassword();
         String getConfirmationPassword();
         void goToProfilePageActivity();
+        void saveUserData(String userUid, String userEmail, String userName);
     }
 
     interface Presenter<V extends AppView> extends BasePresenterContract<V> {
         void onCreateAccount();
-        void onAccountCreatedSuccessfully();
+        void onAccountCreatedSuccessfully(User user, String password);
     }
 }

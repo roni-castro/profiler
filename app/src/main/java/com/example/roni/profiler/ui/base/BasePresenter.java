@@ -1,6 +1,9 @@
 package com.example.roni.profiler.ui.base;
 
+import android.support.annotation.CallSuper;
+
 import com.example.roni.profiler.dataModel.auth.AuthService;
+import com.example.roni.profiler.dataModel.database.DatabaseSource;
 import com.example.roni.profiler.utils.BaseSchedulerContract;
 
 import io.reactivex.disposables.CompositeDisposable;
@@ -13,22 +16,27 @@ import timber.log.Timber;
 public abstract class BasePresenter<V extends BaseView> implements BasePresenterContract<V> {
     private final CompositeDisposable compositeDisposable;
     private final AuthService authService;
+    private final DatabaseSource databaseSource;
     private final BaseSchedulerContract schedulerProvider;
     private V appView;
 
     public BasePresenter(AuthService authService,
                          BaseSchedulerContract schedulerProvider,
-                         CompositeDisposable compositeDisposable) {
+                         CompositeDisposable compositeDisposable,
+                         DatabaseSource databaseSource) {
         this.authService = authService;
         this.schedulerProvider = schedulerProvider;
         this.compositeDisposable = compositeDisposable;
+        this.databaseSource = databaseSource;
     }
 
+    @CallSuper
     @Override
     public void onAttach(V appView) {
         this.appView = appView;
     }
 
+    @CallSuper
     @Override
     public void onDetach() {
         compositeDisposable.clear();
@@ -62,5 +70,9 @@ public abstract class BasePresenter<V extends BaseView> implements BasePresenter
 
     public AuthService getAuthService() {
         return authService;
+    }
+
+    public DatabaseSource getDatabaseSource() {
+        return databaseSource;
     }
 }

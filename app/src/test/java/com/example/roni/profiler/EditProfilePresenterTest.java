@@ -1,6 +1,7 @@
 package com.example.roni.profiler;
 
 import com.example.roni.profiler.dataModel.auth.AuthService;
+import com.example.roni.profiler.dataModel.database.DatabaseSource;
 import com.example.roni.profiler.dataModel.database.Profile;
 import com.example.roni.profiler.ui.profilePage.edit.EditProfileContract;
 import com.example.roni.profiler.ui.profilePage.edit.EditProfilePresenter;
@@ -35,6 +36,9 @@ public class EditProfilePresenterTest {
     AuthService authService;
 
     @Mock
+    DatabaseSource dbService;
+
+    @Mock
     EditProfileContract.AppView editProfileAppView;
 
     @Before
@@ -44,7 +48,8 @@ public class EditProfilePresenterTest {
         presenter = new EditProfilePresenter<>(
                 authService,
                 TestSchedulerProvider.getInstance(),
-                new CompositeDisposable());
+                new CompositeDisposable(),
+                dbService);
         presenter.onAttach(editProfileAppView);
     }
 
@@ -57,18 +62,18 @@ public class EditProfilePresenterTest {
     public void whenConfirmButtonIsClickedAndUpdateProfileSuccessfully() {
         Mockito.when(editProfileAppView.getBio()).thenReturn(VALID_BIO);
         Mockito.when(editProfileAppView.getInterests()).thenReturn(VALID_INTERESTS);
-        Mockito.when(authService.updateProfileInDB(Mockito.any(Profile.class)))
+        Mockito.when(dbService.updateProfile(Mockito.any(Profile.class)))
                 .thenReturn(Completable.complete());
         presenter.onConfirmUpdateMenuClick();
         Mockito.verify(editProfileAppView).showLoading();
         Mockito.verify(editProfileAppView).hideLoading();
-        Mockito.verify(editProfileAppView).updateProfileBioAndInterest();
+        Mockito.verify(editProfileAppView).updateProfileData();
     }
 
     public void whenConfirmButtonIsClickedAndUpdateProfileFails() {
         Mockito.when(editProfileAppView.getBio()).thenReturn(VALID_BIO);
         Mockito.when(editProfileAppView.getInterests()).thenReturn(VALID_INTERESTS);
-        Mockito.when(authService.updateProfileInDB(Mockito.any(Profile.class)))
+        Mockito.when(dbService.updateProfile(Mockito.any(Profile.class)))
                 .thenReturn(Completable.error(new Exception("Error saving profile in DB")));
         presenter.onConfirmUpdateMenuClick();
         Mockito.verify(editProfileAppView).showLoading();

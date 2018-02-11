@@ -38,8 +38,8 @@ public abstract class BaseFragment extends Fragment implements BaseView {
         View v = inflater.inflate(getFragmentViewResId(), container, false);
         unbinder = ButterKnife.bind(this, v);
         injectViewIntoComponent();
-        setUpCreatedView(v);
         attachViewToPresenter();
+        setUpCreatedView(v);
         return v;
     }
 

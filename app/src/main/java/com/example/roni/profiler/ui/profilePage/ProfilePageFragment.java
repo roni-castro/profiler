@@ -1,19 +1,24 @@
 package com.example.roni.profiler.ui.profilePage;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.roni.profiler.R;
-import com.example.roni.profiler.di.ActivityComponent;
+import com.example.roni.profiler.dataModel.auth.User;
+import com.example.roni.profiler.dataModel.database.Profile;
 import com.example.roni.profiler.ui.base.BaseFragment;
 import com.example.roni.profiler.ui.login.LoginActivity;
 import com.example.roni.profiler.ui.profilePage.edit.EditProfileActivity;
 import com.example.roni.profiler.utils.DialogUtils;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
@@ -25,7 +30,7 @@ public class ProfilePageFragment extends BaseFragment implements ProfilePageCont
     @Inject
     ProfilePageContract.Presenter<ProfilePageContract.AppView> presenter;
 
-    @BindView(R.id.txt_profile_name) TextView userNameTextView;
+    @BindView(R.id.txt_profile_name) TextView nameTextView;
     @BindView(R.id.txt_profile_email) TextView emailTextView;
     @BindView(R.id.txt_profile_interests_description) TextView interestsTextView;
     @BindView(R.id.txt_profile_about_me_description) TextView aboutMeTextView;
@@ -64,6 +69,7 @@ public class ProfilePageFragment extends BaseFragment implements ProfilePageCont
     @Override
     public void attachViewToPresenter() {
         presenter.onAttach(this);
+        presenter.loadUserProfileData();
     }
 
     @Override
@@ -119,7 +125,7 @@ public class ProfilePageFragment extends BaseFragment implements ProfilePageCont
 
     @Override
     public void setName(String name) {
-        userNameTextView.setText(name);
+        nameTextView.setText(name);
     }
 
     @Override
@@ -129,20 +135,23 @@ public class ProfilePageFragment extends BaseFragment implements ProfilePageCont
 
     @Override
     public void setProfilePhotoUrl(String profilePhotoUrl) {
-        Picasso.with(getActivity())
-                .load(profilePhotoUrl)
-                .noFade()
-                .into(profilePhotoImageView, new com.squareup.picasso.Callback() {
-                            @Override
-                            public void onSuccess() {
-                                presenter.onThumbnailLoaded();
-                            }
+        if(profilePhotoUrl != null && profilePhotoUrl.length() > 0) {
+            Picasso.with(getActivity())
+                    .load(profilePhotoUrl)
+                    .noFade()
+                    .into(profilePhotoImageView, new com.squareup.picasso.Callback() {
+                        @Override
+                        public void onSuccess() {
+                            presenter.onThumbnailLoaded();
+                        }
 
-                            @Override
-                            public void onError() {
-                                showMessage(getString(R.string.error_photo_url_request));
-                            }
-                        });
+                        @Override
+                        public void onError() {
+                            showMessage(getString(R.string.error_photo_url_request));
+                            setDefaultProfilePhoto();
+                        }
+                    });
+        }
     }
 
     @Override
@@ -158,6 +167,16 @@ public class ProfilePageFragment extends BaseFragment implements ProfilePageCont
     @Override
     public void setInterests(String interests) {
         interestsTextView.setText(interests);
+    }
+
+    @Override
+    public User loadUserDataFromCache() {
+        SharedPreferences sharedPreferences =
+                getActivity().getSharedPreferences("USER_DATA", Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString("USER_DATA", "");
+        User user = gson.fromJson(json, User.class);
+        return user;
     }
 
     @Override
@@ -196,6 +215,15 @@ public class ProfilePageFragment extends BaseFragment implements ProfilePageCont
     @Override
     public void setDetailLoadingIndicator(boolean show) {
 
+    }
+
+    @Override
+    public void setUpProfileFields(Profile profile) {
+        nameTextView.setText(profile.getName());
+        emailTextView.setText(profile.getEmail());
+        aboutMeTextView.setText(profile.getBio());
+        interestsTextView.setText(profile.getInterests());
+        setProfilePhotoUrl(profile.getPhotoURL());
     }
 
     @OnClick(R.id.img_profile_photo)

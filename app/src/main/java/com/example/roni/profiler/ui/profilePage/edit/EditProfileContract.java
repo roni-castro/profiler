@@ -11,11 +11,13 @@ public interface EditProfileContract {
 
     interface AppView extends BaseView{
 
-        void updateProfileBioAndInterest();
+        void updateProfileData();
 
         String getInterests();
 
         String getBio();
+
+        void goBackToProfilePageWithMessage();
     }
 
     interface Presenter<V extends BaseView> extends BasePresenterContract<V>{

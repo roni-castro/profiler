@@ -8,11 +8,11 @@ import io.reactivex.Maybe;
  */
 
 public interface DatabaseSource {
-    Completable createNewProfile(Profile profile);
+    Completable createNewProfileToUser(String userId, Profile profile);
 
     Completable updateProfile(Profile profile);
 
-    Completable deleteProfile(String uid);
+    Completable deleteUser(String email, String password);
 
     Maybe<Profile> getProfile(String uid);
 

@@ -3,7 +3,6 @@ package com.example.roni.profiler.dataModel.auth;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.example.roni.profiler.dataModel.database.Profile;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -16,6 +15,9 @@ import io.reactivex.CompletableOnSubscribe;
 import io.reactivex.Maybe;
 import io.reactivex.MaybeEmitter;
 import io.reactivex.MaybeOnSubscribe;
+import io.reactivex.Single;
+import io.reactivex.SingleEmitter;
+import io.reactivex.SingleOnSubscribe;
 
 /**
  * Created by roni on 01/02/18.
@@ -38,19 +40,21 @@ public class FirebaseAuthService implements AuthService {
     }
 
     @Override
-    public Completable createAccount(final Credentials credentials) {
-        return Completable.create(
-                new CompletableOnSubscribe() {
+    public Single<User> createAccount(final Credentials credentials) {
+        return Single.create(
+                new SingleOnSubscribe<User>() {
                     @Override
-                    public void subscribe(final CompletableEmitter emitter) throws Exception {
+                    public void subscribe(final SingleEmitter<User> emitter) throws Exception {
                         auth.createUserWithEmailAndPassword(credentials.getEmail(), credentials.getPassword())
                                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                     @Override
                                     public void onComplete(@NonNull Task<AuthResult> task) {
                                         if (task.isSuccessful()) {
                                             // Created user successfully and logged him in
-                                            //FirebaseUser user = auth.getCurrentUser();
-                                            emitter.onComplete();
+                                            FirebaseUser firebaseUser = auth.getCurrentUser();
+                                            User user = new User(firebaseUser.getUid(), firebaseUser.getEmail(), firebaseUser.getDisplayName());
+                                            emitter.onSuccess(user);
+                                            //emitter.onComplete();
                                         } else {
                                             // If creation of user faileds
                                             emitter.onError(task.getException());
@@ -63,28 +67,30 @@ public class FirebaseAuthService implements AuthService {
     }
 
     @Override
-    public Completable loginAccount(final Credentials credentials) {
-        return Completable.create(
-                new CompletableOnSubscribe() {
-                    @Override
-                    public void subscribe(final CompletableEmitter emitter) throws Exception {
-                        auth.signInWithEmailAndPassword(credentials.getEmail(), credentials.getPassword())
-                                .addOnCompleteListener( new OnCompleteListener<AuthResult>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<AuthResult> task) {
-                                        if (task.isSuccessful()) {
-                                            // Sign in success
-                                            Log.d("FirebaseAuthService", "signInWithEmail:success");
-                                            emitter.onComplete();
-                                        } else {
-                                            // Sign in fails
-                                            Log.w("FirebaseAuthService", "signInWithEmail:failure", task.getException());
-                                            emitter.onError(task.getException());
-                                        }
-                                    }
-                                });
-                    }
-                });
+    public Single<User> loginAccount(final Credentials credentials) {
+        return Single.create(
+            new SingleOnSubscribe<User>() {
+                @Override
+                public void subscribe(final SingleEmitter<User> emitter) throws Exception {
+                    auth.signInWithEmailAndPassword(credentials.getEmail(), credentials.getPassword())
+                        .addOnCompleteListener( new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    // Sign in success
+                                    FirebaseUser firebaseUser = auth.getCurrentUser();
+                                    User user = new User(firebaseUser.getUid(), firebaseUser.getEmail(), firebaseUser.getDisplayName());
+                                    Log.d("FirebaseAuthService", "signInWithEmail:success");
+                                    emitter.onSuccess(user);
+                                } else {
+                                    // Sign in fails
+                                    Log.w("FirebaseAuthService", "signInWithEmail:failure", task.getException());
+                                    emitter.onError(task.getException());
+                                }
+                            }
+                        });
+                }
+            });
     }
 
     @Override
@@ -138,8 +144,9 @@ public class FirebaseAuthService implements AuthService {
                                 if(firebaseUser != null){
                                     // User is logged in
                                     User user = new User(
+                                            firebaseUser.getUid(),
                                             firebaseUser.getEmail(),
-                                            firebaseUser.getUid()
+                                            firebaseUser.getDisplayName()
                                     );
                                     Maybe.just(user);
                                     e.onSuccess(user);
@@ -162,10 +169,5 @@ public class FirebaseAuthService implements AuthService {
             auth.removeAuthStateListener(listener);
             listener = null;
         }
-    }
-
-    @Override
-    public Completable updateProfileInDB(Profile profile) {
-        return null;
     }
 }

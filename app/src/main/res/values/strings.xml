@@ -18,4 +18,7 @@
     <string name="confirmation_password">Confirmation password</string>
     <string name="about_me_hint">Tell a bit about yourself</string>
     <string name="interests_hint">What are your favorites things to do?</string>
+    <string name="confirm_menu_action">Confirm action</string>
+    <string name="about_me_hint_enter_text">Tell us about yourself (Max 1500 characters)</string>
+    <string name="interests_hint_enter_text">Tell us about your interests (Max 3000 characters)</string>
 </resources>

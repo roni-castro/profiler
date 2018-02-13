@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -169,16 +168,6 @@ public class ProfilePageFragment extends BaseFragment implements ProfilePageCont
     @Override
     public void setInterests(String interests) {
         interestsTextView.setText(interests);
-    }
-
-    @Override
-    public User loadUserDataFromCache() {
-        SharedPreferences sharedPreferences =
-                getActivity().getSharedPreferences("USER_DATA", Context.MODE_PRIVATE);
-        Gson gson = new Gson();
-        String json = sharedPreferences.getString("USER_DATA", "");
-        User user = gson.fromJson(json, User.class);
-        return user;
     }
 
     @Override

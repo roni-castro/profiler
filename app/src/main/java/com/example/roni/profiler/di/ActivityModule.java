@@ -84,7 +84,7 @@ public class ActivityModule {
 
     @Provides
     EditProfileContract.Presenter<EditProfileContract.AppView> provideEditProfilePresenter(
-            EditProfilePresenter<EditProfileContract.AppView> presenter) {
+           EditProfilePresenter<EditProfileContract.AppView> presenter) {
         return presenter;
     }
 }

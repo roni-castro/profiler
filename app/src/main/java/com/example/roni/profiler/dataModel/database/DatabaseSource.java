@@ -8,7 +8,7 @@ import io.reactivex.Observable;
  */
 
 public interface DatabaseSource {
-    Completable createNewProfileToUser(String userId, Profile profile);
+    Completable createNewProfileToUser(Profile profile);
 
     Completable updateProfile(Profile profile);
 

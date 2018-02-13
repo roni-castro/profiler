@@ -97,6 +97,11 @@ public class LoginPresenter<V extends LoginContract.AppView> extends BasePresent
     }
 
     @Override
+    public void onSubscribe() {
+
+    }
+
+    @Override
     public void setUserAsLoggedOut() {
 
     }

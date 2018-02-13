@@ -2,6 +2,9 @@ package com.example.roni.profiler;
 
 import com.example.roni.profiler.dataModel.auth.AuthService;
 import com.example.roni.profiler.dataModel.auth.Credentials;
+import com.example.roni.profiler.dataModel.auth.User;
+import com.example.roni.profiler.dataModel.database.DatabaseSource;
+import com.example.roni.profiler.dataModel.database.Profile;
 import com.example.roni.profiler.ui.createAccount.CreateAccountContract;
 import com.example.roni.profiler.ui.createAccount.CreateAccountPresenter;
 
@@ -15,7 +18,10 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import io.reactivex.Completable;
+import io.reactivex.Single;
 import io.reactivex.disposables.CompositeDisposable;
+
+import static org.mockito.ArgumentMatchers.any;
 
 /**
  * Created by roni on 04/02/18.
@@ -24,6 +30,7 @@ import io.reactivex.disposables.CompositeDisposable;
 @RunWith(MockitoJUnitRunner.class)
 public class CreateAccountUnitTest {
     private static final String VALID_NAME = "Roni";
+    private static final String VALID_UID = "uid";
     private static final String INVALID_NAME = "";
     private static final String INVALID_EMAIL = "testeteste.com";
     private static final String VALID_EMAIL = "teste@teste.com";
@@ -38,6 +45,9 @@ public class CreateAccountUnitTest {
     AuthService authService;
 
     @Mock
+    DatabaseSource databaseSource;
+
+    @Mock
     private CreateAccountContract.AppView appView;
 
     @Before
@@ -47,7 +57,8 @@ public class CreateAccountUnitTest {
         presenter = new CreateAccountPresenter<>(
                 authService,
                 TestSchedulerProvider.getInstance(),
-                new CompositeDisposable());
+                new CompositeDisposable(),
+                databaseSource);
         presenter.onAttach(appView);
     }
 
@@ -127,12 +138,15 @@ public class CreateAccountUnitTest {
     }
 
     @Test
-    public void testCreationOfAccountSuccess(){
+    public void testCreationOfAccountSuccessAndProfileSuccess(){
         Mockito.when(appView.getName()).thenReturn(VALID_NAME);
         Mockito.when(appView.getEmail()).thenReturn(VALID_EMAIL);
         Mockito.when(appView.getPassword()).thenReturn(VALID_PASSWORD);
         Mockito.when(appView.getConfirmationPassword()).thenReturn(VALID_PASSWORD);
-        Mockito.when(authService.createAccount(Mockito.any(Credentials.class)))
+
+        Mockito.when(authService.createAccount(any(Credentials.class)))
+                .thenReturn(Single.just(new User(VALID_UID, VALID_EMAIL, VALID_NAME)));
+        Mockito.when(databaseSource.createNewProfileToUser(any(Profile.class)))
                 .thenReturn(Completable.complete());
         presenter.onCreateAccount();
         Mockito.verify(appView).goToProfilePageActivity();
@@ -145,7 +159,7 @@ public class CreateAccountUnitTest {
         Mockito.when(appView.getPassword()).thenReturn(VALID_PASSWORD);
         Mockito.when(appView.getConfirmationPassword()).thenReturn(VALID_PASSWORD);
         Mockito.when(authService.createAccount(Mockito.any(Credentials.class)))
-                .thenReturn(Completable.error(new Exception()));
+                .thenReturn(Single.<User>error(new Exception()));
         presenter.onCreateAccount();
         Mockito.verify(appView).showMessage(Mockito.anyString());
     }

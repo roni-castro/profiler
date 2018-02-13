@@ -3,11 +3,14 @@ package com.example.roni.profiler.dataModel.auth;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.example.roni.profiler.dataModel.database.Profile;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import io.reactivex.Completable;
 import io.reactivex.CompletableEmitter;
@@ -27,6 +30,7 @@ public class FirebaseAuthService implements AuthService {
     private static FirebaseAuthService instance;
     private FirebaseAuth auth;
     private FirebaseAuth.AuthStateListener listener;
+    private static final String USER_PROFILE = "user_profile";
 
     private FirebaseAuthService() {
         auth = FirebaseAuth.getInstance();
@@ -148,7 +152,6 @@ public class FirebaseAuthService implements AuthService {
                                             firebaseUser.getEmail(),
                                             firebaseUser.getDisplayName()
                                     );
-                                    Maybe.just(user);
                                     e.onSuccess(user);
                                 } else{
                                     // User is logged out

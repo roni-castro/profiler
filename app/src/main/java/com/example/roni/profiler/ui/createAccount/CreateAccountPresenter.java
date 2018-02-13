@@ -84,9 +84,9 @@ public class CreateAccountPresenter<V extends CreateAccountContract.AppView> ext
     }
 
     private void addUserProfileToDatabase(final String email, final String userUid, final String name, final String password) {
-        final Profile profile = new Profile("", "", "", email, "", name);
+        final Profile profile = new Profile("", "", "", email, "", name, userUid);
         getCompositeDisposable().add(
-                getDatabaseSource().createNewProfileToUser(userUid, profile)
+                getDatabaseSource().createNewProfileToUser(profile)
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribeWith(new DisposableCompletableObserver(){
@@ -124,5 +124,10 @@ public class CreateAccountPresenter<V extends CreateAccountContract.AppView> ext
                     }
                 })
         );
+    }
+
+    @Override
+    public void onSubscribe() {
+
     }
 }

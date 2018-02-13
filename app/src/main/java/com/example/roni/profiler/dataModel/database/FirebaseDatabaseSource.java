@@ -18,10 +18,12 @@ import com.google.firebase.database.ValueEventListener;
 import io.reactivex.Completable;
 import io.reactivex.CompletableEmitter;
 import io.reactivex.CompletableOnSubscribe;
-import io.reactivex.MaybeEmitter;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Single;
+import io.reactivex.SingleEmitter;
+import io.reactivex.SingleOnSubscribe;
 
 /**
  * Created by roni on 10/02/18.
@@ -42,12 +44,13 @@ public class FirebaseDatabaseSource implements DatabaseSource {
     }
 
     @Override
-    public Completable createNewProfileToUser(final String userId, final Profile profile) {
+    public Completable createNewProfileToUser(final Profile profile) {
         return Completable.create(
                 new CompletableOnSubscribe() {
                     @Override
                     public void subscribe(final CompletableEmitter emitter) throws Exception {
-                        final DatabaseReference dataBaseProfile = FirebaseDatabase.getInstance().getReference(USER_PROFILE).child(userId);
+                        final DatabaseReference dataBaseProfile =
+                                FirebaseDatabase.getInstance().getReference(USER_PROFILE).child(profile.getUserId());
                         String profileUid = dataBaseProfile.push().getKey();
                         profile.setUid(profileUid);
                         dataBaseProfile.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -80,8 +83,31 @@ public class FirebaseDatabaseSource implements DatabaseSource {
     }
 
     @Override
-    public Completable updateProfile(Profile profile) {
-        return null;
+    public Completable updateProfile(final Profile profile) {
+        return Completable.create(
+            new CompletableOnSubscribe() {
+                @Override
+                public void subscribe(final CompletableEmitter emitter) throws Exception {
+                    DatabaseReference databaseUser =
+                            FirebaseDatabase
+                                    .getInstance()
+                                    .getReference(USER_PROFILE)
+                                    .child(profile.getUserId());
+                    databaseUser
+                            .child(profile.getUid())
+                            .setValue(profile)
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                emitter.onComplete();
+                            } else {
+                                emitter.onError(task.getException());
+                            }
+                        }
+                    });
+                }
+            });
     }
 
     public Completable deleteUser(final String email, final String password) {
@@ -117,14 +143,14 @@ public class FirebaseDatabaseSource implements DatabaseSource {
     }
 
     @Override
-    public Observable<Profile> getProfile(final String uid) {
+    public Observable<Profile> getProfile(final String userUid) {
         return Observable.create(
             new ObservableOnSubscribe<Profile>() {
 
                 @Override
                 public void subscribe(final ObservableEmitter<Profile> emitter) throws Exception {
                     final DatabaseReference dataBaseProfile =
-                            FirebaseDatabase.getInstance().getReference(USER_PROFILE).child(uid);
+                            FirebaseDatabase.getInstance().getReference().child(USER_PROFILE).child(userUid);
                     dataBaseProfile.addValueEventListener(new ValueEventListener() {
 
                         @Override

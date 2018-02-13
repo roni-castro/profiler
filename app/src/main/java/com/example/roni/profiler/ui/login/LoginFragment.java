@@ -107,17 +107,6 @@ public class LoginFragment extends BaseFragment implements LoginContract.AppView
         getActivity().finish();
     }
 
-    @Override
-    public void saveUserData(String uid, String email, String name) {
-        SharedPreferences prefs = getActivity().getSharedPreferences("USER_DATA", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        Gson gson = new Gson();
-        User user = new User(uid, email, name);
-        String json = gson.toJson(user);
-        editor.putString("USER_DATA", json);
-        editor.apply();
-    }
-
     @OnClick(R.id.btn_login)
     public void loginButtonClicked(View view){
         presenter.onLoginClick();

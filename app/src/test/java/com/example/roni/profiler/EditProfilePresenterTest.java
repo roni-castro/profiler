@@ -67,7 +67,7 @@ public class EditProfilePresenterTest {
         presenter.onConfirmUpdateMenuClick();
         Mockito.verify(editProfileAppView).showLoading();
         Mockito.verify(editProfileAppView).hideLoading();
-        Mockito.verify(editProfileAppView).updateProfileData();
+        Mockito.verify(editProfileAppView).updateProfileDataConfirmed();
     }
 
     public void whenConfirmButtonIsClickedAndUpdateProfileFails() {

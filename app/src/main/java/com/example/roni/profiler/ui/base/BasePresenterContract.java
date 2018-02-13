@@ -8,6 +8,8 @@ public interface BasePresenterContract<V extends BaseView> {
 
     void onAttach(V appView);
 
+    void onSubscribe();
+
     void onDetach();
 
     //TODO HANDLE API ERROR

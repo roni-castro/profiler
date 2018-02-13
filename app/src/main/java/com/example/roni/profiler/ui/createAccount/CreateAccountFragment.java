@@ -113,18 +113,6 @@ public class CreateAccountFragment extends BaseFragment implements CreateAccount
         startActivity(intent);
     }
 
-    @Override
-    public void saveUserData(String userUid, String userEmail, String userName) {
-        SharedPreferences prefs = getActivity().getSharedPreferences("USER_DATA", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        Gson gson = new Gson();
-        User user = new User(userUid, userEmail, userName);
-        String json = gson.toJson(user);
-        editor.putString("USER_DATA", json);
-        editor.apply();
-
-    }
-
     @OnClick(R.id.btn_create_account)
     public void onCreateAccountClick(View v){
         presenter.onCreateAccount();

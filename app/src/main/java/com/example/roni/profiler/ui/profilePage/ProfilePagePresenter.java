@@ -108,4 +108,9 @@ public class ProfilePagePresenter<V extends ProfilePageContract.AppView> extends
     public void onThumbnailLoaded() {
 
     }
+
+    @Override
+    public void onSubscribe() {
+
+    }
 }

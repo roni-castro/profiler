@@ -1,9 +1,7 @@
 package com.example.roni.profiler;
 
-import android.view.View;
-
 import com.example.roni.profiler.dataModel.auth.AuthService;
-import com.example.roni.profiler.dataModel.auth.Credentials;
+import com.example.roni.profiler.dataModel.database.DatabaseSource;
 import com.example.roni.profiler.dataModel.database.Profile;
 import com.example.roni.profiler.ui.profilePage.ProfilePageContract;
 import com.example.roni.profiler.ui.profilePage.ProfilePagePresenter;
@@ -34,6 +32,9 @@ public class ProfilePagePresenterTest {
     AuthService authService;
 
     @Mock
+    DatabaseSource databaseSource;
+
+    @Mock
     ProfilePageContract.AppView profilePageAppView;
 
     private ProfilePagePresenter<ProfilePageContract.AppView> presenter;
@@ -45,7 +46,8 @@ public class ProfilePagePresenterTest {
         presenter = new ProfilePagePresenter<>(
                 authService,
                 TestSchedulerProvider.getInstance(),
-                new CompositeDisposable());
+                new CompositeDisposable(),
+                databaseSource);
         presenter.onAttach(profilePageAppView);
     }
 
@@ -57,7 +59,7 @@ public class ProfilePagePresenterTest {
     @Test
     public void whenFabButtonIsClickedOpenEditProfileScreen(){
         presenter.onEditProfileClick();
-        verify(profilePageAppView).goToEditProfileActivity();
+        verify(profilePageAppView).goToEditProfileActivity(any(String.class));
     }
 
     @Test

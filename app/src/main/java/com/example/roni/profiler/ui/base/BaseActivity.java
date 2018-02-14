@@ -1,6 +1,6 @@
 package com.example.roni.profiler.ui.base;
 
-import android.app.ProgressDialog;
+import android.app.Dialog;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -25,7 +25,7 @@ import butterknife.Unbinder;
  */
 
 public abstract class BaseActivity extends AppCompatActivity implements BaseView{
-    private ProgressDialog progressDialog;
+    private Dialog progressDialog;
     private Unbinder unbinder;
     private ActivityComponent activityComponent;
 

@@ -1,6 +1,6 @@
 package com.example.roni.profiler.ui.base;
 
-import android.app.ProgressDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -26,7 +26,7 @@ import butterknife.Unbinder;
 
 public abstract class BaseFragment extends Fragment implements BaseView {
     private BaseActivity activity;
-    private ProgressDialog progressDialog;
+    private Dialog progressDialog;
     private Unbinder unbinder;
 
     public abstract int getFragmentViewResId();

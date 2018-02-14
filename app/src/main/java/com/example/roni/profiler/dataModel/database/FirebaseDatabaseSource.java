@@ -163,7 +163,7 @@ public class FirebaseDatabaseSource implements DatabaseSource {
                                 }
                                 emitter.onNext(profile);
                             } else {
-                                emitter.onComplete();
+                                emitter.onError(new Exception("User does not have a valid profile"));
                             }
                         }
 

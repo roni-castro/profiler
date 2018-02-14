@@ -1,23 +1,18 @@
 package com.example.roni.profiler.ui.profilePage;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.roni.profiler.R;
-import com.example.roni.profiler.dataModel.auth.User;
 import com.example.roni.profiler.dataModel.database.Profile;
 import com.example.roni.profiler.ui.base.BaseFragment;
 import com.example.roni.profiler.ui.login.LoginActivity;
 import com.example.roni.profiler.ui.profilePage.edit.EditProfileActivity;
 import com.example.roni.profiler.utils.DialogUtils;
-import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
@@ -80,36 +75,6 @@ public class ProfilePageFragment extends BaseFragment implements ProfilePageCont
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setRetainInstance(true); // Helps the view/Presenter/Service survive orientation change
-    }
-
-    @Override
-    public void showMessage(int stringResId) {
-        Toast.makeText(getActivity().getApplicationContext(), stringResId, Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void showMessage(String message) {
-        Toast.makeText(getActivity().getApplicationContext(), message, Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void onError(int resId) {
-
-    }
-
-    @Override
-    public void onError(String message) {
-
-    }
-
-    @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void hideLoading() {
-
     }
 
     @Override
@@ -196,16 +161,6 @@ public class ProfilePageFragment extends BaseFragment implements ProfilePageCont
     @Override
     public void openPhotoGallery() {
         //Logic to be implemented using a lib
-    }
-
-    @Override
-    public void setThumbnailLoadingIndicator(boolean show) {
-
-    }
-
-    @Override
-    public void setDetailLoadingIndicator(boolean show) {
-
     }
 
     @Override

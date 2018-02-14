@@ -1,7 +1,5 @@
 package com.example.roni.profiler.ui.profilePage;
 
-import android.content.SharedPreferences;
-
 import com.example.roni.profiler.dataModel.auth.AuthService;
 import com.example.roni.profiler.dataModel.auth.User;
 import com.example.roni.profiler.dataModel.database.DatabaseSource;
@@ -13,7 +11,6 @@ import javax.inject.Inject;
 
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableCompletableObserver;
-import io.reactivex.observers.DisposableMaybeObserver;
 import io.reactivex.observers.DisposableObserver;
 
 
@@ -49,6 +46,7 @@ public class ProfilePagePresenter<V extends ProfilePageContract.AppView> extends
 
                     @Override
                     public void onNext(Profile profile) {
+                        getView().hideLoading();
                         getView().setUpProfileFields(profile);
                     }
 

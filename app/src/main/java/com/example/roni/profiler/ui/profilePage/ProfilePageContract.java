@@ -29,8 +29,6 @@ public interface ProfilePageContract {
         void goToLoginActivity();
         void goToEditProfileActivity();
         void openPhotoGallery();
-        void setThumbnailLoadingIndicator(boolean show);
-        void setDetailLoadingIndicator(boolean show);
 
         void onThumbnailClick(View view);
         void onSettingsButtonClick(View view);

@@ -59,7 +59,7 @@ public class ProfilePagePresenterTest {
     @Test
     public void whenFabButtonIsClickedOpenEditProfileScreen(){
         presenter.onEditProfileClick();
-        verify(profilePageAppView).goToEditProfileActivity(any(String.class));
+        verify(profilePageAppView).goToEditProfileActivity();
     }
 
     @Test
